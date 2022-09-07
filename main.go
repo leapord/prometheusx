@@ -1,11 +1,10 @@
 package main
 
 import (
-	_ "prometheus_ext/internal/packed"
-
+	_ "github.com/gogf/gf/contrib/drivers/mysql/v2"
 	"github.com/gogf/gf/v2/os/gctx"
-
-	"prometheus_ext/internal/cmd"
+	"github.com/leapord/prometheus_ext/internal/cmd"
+	_ "github.com/leapord/prometheus_ext/internal/packed"
 )
 
 func main() {

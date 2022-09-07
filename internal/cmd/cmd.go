@@ -7,7 +7,7 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcmd"
 
-	"prometheus_ext/internal/controller"
+	"github.com/leapord/prometheus_ext/internal/controller"
 )
 
 var (
@@ -21,6 +21,7 @@ var (
 				group.Middleware(ghttp.MiddlewareHandlerResponse)
 				group.Bind(
 					controller.Hello,
+					controller.Authentication,
 				)
 			})
 			s.Run()

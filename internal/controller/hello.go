@@ -5,7 +5,7 @@ import (
 
 	"github.com/gogf/gf/v2/frame/g"
 
-	"prometheus_ext/api/v1"
+	v1 "github.com/leapord/prometheus_ext/api/v1"
 )
 
 var (
