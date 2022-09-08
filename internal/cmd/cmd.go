@@ -8,6 +8,7 @@ import (
 	"github.com/gogf/gf/v2/os/gcmd"
 
 	"github.com/leapord/prometheus_ext/internal/controller"
+	"github.com/leapord/prometheus_ext/internal/middleware"
 )
 
 var (
@@ -25,7 +26,10 @@ var (
 				)
 			})
 			s.Group("/api", func(group *ghttp.RouterGroup) {
-				group.Middleware(ghttp.MiddlewareHandlerResponse)
+				group.Middleware(
+					ghttp.MiddlewareHandlerResponse,
+					middleware.TokenMiddleware,
+				)
 				group.Bind(
 					controller.Group,
 				)

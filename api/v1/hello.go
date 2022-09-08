@@ -5,7 +5,7 @@ import (
 )
 
 type HelloReq struct {
-	g.Meta `path:"/hello" tags:"Hello" method:"get" summary:"You first hello api"`
+	g.Meta `path:"/version" tags:"Hello" method:"get" summary:"the version of this program"`
 }
 type HelloRes struct {
 	g.Meta `mime:"text/html" example:"string"`

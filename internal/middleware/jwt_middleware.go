@@ -5,12 +5,26 @@ import (
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
+	"github.com/gogf/gf/v2/os/gctx"
 	jwtUtil "github.com/golang-jwt/jwt/v4"
 	"github.com/leapord/prometheus_ext/internal/consts"
 	"github.com/leapord/prometheus_ext/internal/model/do"
 )
 
 func TokenMiddleware(r *ghttp.Request) {
+	ctx := gctx.New()
+
+	runtime, err := g.Cfg().Get(ctx, "profile.active")
+	if err != nil {
+		g.Log().Error(ctx, err)
+		return
+	}
+
+	if runtime.String() == "dev" {
+		r.Middleware.Next()
+		return
+	}
+
 	token := r.GetHeader("token")
 	if g.IsEmpty(token) {
 		result := g.NewVar("请先登录")

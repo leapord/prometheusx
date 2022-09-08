@@ -1,5 +1,5 @@
 server:
-  address:     ":8000"
+  address: ":8000"
   openapiPath: "/api.json"
   swaggerPath: "/swagger"
 
@@ -9,7 +9,9 @@ database:
     link: "root:root@tcp(127.0.0.1:3306)/prometheus_ext"
     debug: true
 
-logger:
-  level : "all"
-  stdout: true
+profile:
+  active: dev
 
+logger:
+  level: "all"
+  stdout: true
