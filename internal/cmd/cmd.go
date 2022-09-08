@@ -24,6 +24,12 @@ var (
 					controller.Authentication,
 				)
 			})
+			s.Group("/api", func(group *ghttp.RouterGroup) {
+				group.Middleware(ghttp.MiddlewareHandlerResponse)
+				group.Bind(
+					controller.Group,
+				)
+			})
 			s.Run()
 			return nil
 		},
