@@ -20,16 +20,18 @@ type GroupDao struct {
 
 // GroupColumns defines and stores column names for table group.
 type GroupColumns struct {
-	Id         string // 主键
-	Name       string // 分组名称
-	CreateTime string // 创建时间
+	Id             string // 主键
+	Name           string // 分组名称
+	Identification string // 英文标识
+	CreateTime     string // 创建时间
 }
 
 //  groupColumns holds the columns for table group.
 var groupColumns = GroupColumns{
-	Id:         "id",
-	Name:       "name",
-	CreateTime: "create_time",
+	Id:             "id",
+	Name:           "name",
+	Identification: "identification",
+	CreateTime:     "create_time",
 }
 
 // NewGroupDao creates and returns a new DAO object for table data access.
