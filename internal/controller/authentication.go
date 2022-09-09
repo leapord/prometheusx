@@ -40,7 +40,8 @@ func (a *cAuthentication) RegisterUser(ctx context.Context, req *v1.RegisterReq)
 		Password:    req.Password,
 		PhoneNumber: req.PhoneNumber,
 		Email:       req.Email,
-		CreateTime:  gtime.Now().Format("Y-M-d H:i:s")}
+		CreateTime:  gtime.Now(),
+	}
 	err = service.User.Regist(ctx, user)
 
 	return

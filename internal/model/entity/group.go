@@ -4,10 +4,14 @@
 
 package entity
 
+import (
+	"github.com/gogf/gf/v2/os/gtime"
+)
+
 // Group is the golang structure for table group.
 type Group struct {
-	Id             int64  `json:"id"             ` // 主键
-	Name           string `json:"name"           ` // 分组名称
-	Identification string `json:"identification" ` // 英文标识
-	CreateTime     string `json:"createTime"     ` // 创建时间
+	Id             int64       `json:"id"             ` // 主键
+	Name           string      `json:"name"           ` // 分组名称
+	Identification string      `json:"identification" ` // 英文标识
+	CreateTime     *gtime.Time `json:"createTime"     ` // 创建时间
 }

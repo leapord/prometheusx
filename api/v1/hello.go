@@ -8,5 +8,5 @@ type HelloReq struct {
 	g.Meta `path:"/version" tags:"Hello" method:"get" summary:"the version of this program"`
 }
 type HelloRes struct {
-	g.Meta `mime:"text/html" example:"string"`
+	g.Meta `mime:"application/json"`
 }

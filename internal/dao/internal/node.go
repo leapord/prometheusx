@@ -20,24 +20,26 @@ type NodeDao struct {
 
 // NodeColumns defines and stores column names for table node.
 type NodeColumns struct {
-	Id      string // 主键
-	Host    string // 主机地址 IP或者域名
-	Port    string // exporter对应的端口号
-	Owner   string // 所有者/责任人
-	JobName string // prometheus job_name
-	Group   string // 组名
-	Labels  string // 标签 对应 prometheus中的label配置选项
+	Id         string // 主键
+	Host       string // 主机地址 IP或者域名
+	Port       string // exporter对应的端口号
+	Owner      string // 所有者/责任人
+	JobName    string // prometheus job_name
+	Group      string // 组名
+	Labels     string // 标签 对应 prometheus中的label配置选项
+	CreateTime string // 创建时间
 }
 
 //  nodeColumns holds the columns for table node.
 var nodeColumns = NodeColumns{
-	Id:      "id",
-	Host:    "host",
-	Port:    "port",
-	Owner:   "owner",
-	JobName: "job_name",
-	Group:   "group",
-	Labels:  "labels",
+	Id:         "id",
+	Host:       "host",
+	Port:       "port",
+	Owner:      "owner",
+	JobName:    "job_name",
+	Group:      "group",
+	Labels:     "labels",
+	CreateTime: "create_time",
 }
 
 // NewNodeDao creates and returns a new DAO object for table data access.

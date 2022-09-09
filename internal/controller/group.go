@@ -6,6 +6,7 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/util/gconv"
+	"github.com/gogf/gf/v2/util/guid"
 	v1 "github.com/leapord/prometheus_ext/api/v1"
 	service "github.com/leapord/prometheus_ext/internal/logic"
 	model "github.com/leapord/prometheus_ext/internal/model/do"
@@ -17,10 +18,11 @@ var (
 	Group = cGroup{}
 )
 
-func (c *cGroup) AddGroup(ctx context.Context, req *v1.GroupAddReq) (res *v1.GroupAddRes, err error) {
+func (c *cGroup) AddGroup(ctx context.Context, req *v1.GroupAddReq) (res v1.GroupAddRes, err error) {
 	group := &model.Group{
-		Name:       req.Name,
-		CreateTime: gtime.Now(),
+		Name:           req.Name,
+		Identification: guid.S(),
+		CreateTime:     gtime.Now(),
 	}
 	err = service.Group.AddGroup(ctx, group)
 	if err == nil {
@@ -74,7 +76,7 @@ func (c *cGroup) Page(ctx context.Context, req *v1.GroupPageReq) (res *v1.GroupP
 	if !g.IsEmpty(req.Name) {
 		group.Name = req.Name
 	}
-	list, total, err := service.Group.Page(ctx, *group, req.PageNo, req.PageSize)
+	list, total, err := service.Group.Page(ctx, *group, (req.PageNo-1)*req.PageSize, req.PageSize)
 	if err == nil {
 		res = &v1.GroupPageRes{
 			Total:    total,

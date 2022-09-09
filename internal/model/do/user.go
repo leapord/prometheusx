@@ -6,6 +6,7 @@ package do
 
 import (
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gtime"
 )
 
 // User is the golang structure of table user for DAO operations like Where/Data.
@@ -15,7 +16,7 @@ type User struct {
 	Name        interface{} // 用户名
 	LoginName   interface{} // 登录名
 	Password    interface{} // 登录密码,sha256加密
-	CreateTime  interface{} // 创建时间
+	CreateTime  *gtime.Time // 创建时间
 	Email       interface{} // 邮箱
 	PhoneNumber interface{} // 手机号码
 }

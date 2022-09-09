@@ -5,6 +5,7 @@ import (
 
 	"github.com/gogf/gf/v2/frame/g"
 
+	"github.com/gogf/gf/v2/container/gmap"
 	v1 "github.com/leapord/prometheus_ext/api/v1"
 )
 
@@ -15,6 +16,9 @@ var (
 type cHello struct{}
 
 func (c *cHello) Hello(ctx context.Context, req *v1.HelloReq) (res *v1.HelloRes, err error) {
-	g.RequestFromCtx(ctx).Response.Writeln("Hello World!")
+	hashMap := gmap.New(true)
+	hashMap.Set("version", "v1.0")
+	hashMap.Set("author", "leapord")
+	g.RequestFromCtx(ctx).Response.Writeln(hashMap)
 	return
 }

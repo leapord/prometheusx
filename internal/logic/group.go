@@ -49,7 +49,6 @@ func (s *sGroup) Detail(ctx context.Context, id int) (group model.Group, err err
 	if err != nil {
 		g.Log().Error(ctx, err)
 	}
-
 	return
 }
 

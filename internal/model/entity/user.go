@@ -4,13 +4,17 @@
 
 package entity
 
+import (
+	"github.com/gogf/gf/v2/os/gtime"
+)
+
 // User is the golang structure for table user.
 type User struct {
-	Id          int64  `json:"id"          ` // 主键
-	Name        string `json:"name"        ` // 用户名
-	LoginName   string `json:"loginName"   ` // 登录名
-	Password    string `json:"password"    ` // 登录密码,sha256加密
-	CreateTime  string `json:"createTime"  ` // 创建时间
-	Email       string `json:"email"       ` // 邮箱
-	PhoneNumber string `json:"phoneNumber" ` // 手机号码
+	Id          int64       `json:"id"          ` // 主键
+	Name        string      `json:"name"        ` // 用户名
+	LoginName   string      `json:"loginName"   ` // 登录名
+	Password    string      `json:"password"    ` // 登录密码,sha256加密
+	CreateTime  *gtime.Time `json:"createTime"  ` // 创建时间
+	Email       string      `json:"email"       ` // 邮箱
+	PhoneNumber string      `json:"phoneNumber" ` // 手机号码
 }

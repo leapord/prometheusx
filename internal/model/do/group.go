@@ -6,6 +6,7 @@ package do
 
 import (
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gtime"
 )
 
 // Group is the golang structure of table group for DAO operations like Where/Data.
@@ -14,5 +15,5 @@ type Group struct {
 	Id             interface{} // 主键
 	Name           interface{} // 分组名称
 	Identification interface{} // 英文标识
-	CreateTime     interface{} // 创建时间
+	CreateTime     *gtime.Time // 创建时间
 }
