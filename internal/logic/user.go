@@ -9,9 +9,9 @@ import (
 	"github.com/gogf/gf/v2/crypto/gmd5"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/golang-jwt/jwt/v4"
-	"github.com/leapord/prometheus_ext/internal/consts"
-	"github.com/leapord/prometheus_ext/internal/model/do"
-	model "github.com/leapord/prometheus_ext/internal/model/do"
+	"github.com/leapord/prometheusx/internal/consts"
+	"github.com/leapord/prometheusx/internal/model/do"
+	model "github.com/leapord/prometheusx/internal/model/do"
 )
 
 type sUser struct{}

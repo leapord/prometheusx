@@ -7,8 +7,8 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gctx"
 	jwtUtil "github.com/golang-jwt/jwt/v4"
-	"github.com/leapord/prometheus_ext/internal/consts"
-	"github.com/leapord/prometheus_ext/internal/model/do"
+	"github.com/leapord/prometheusx/internal/consts"
+	"github.com/leapord/prometheusx/internal/model/do"
 )
 
 func TokenMiddleware(r *ghttp.Request) {

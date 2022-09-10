@@ -5,7 +5,7 @@
 package dao
 
 import (
-	"github.com/leapord/prometheus_ext/internal/dao/internal"
+	"github.com/leapord/prometheusx/internal/dao/internal"
 )
 
 // internalUserDao is internal type for wrapping internal DAO implements.

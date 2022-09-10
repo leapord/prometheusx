@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/gogf/gf/v2/frame/g"
-	model "github.com/leapord/prometheus_ext/internal/model/do"
-	entity "github.com/leapord/prometheus_ext/internal/model/entity"
+	model "github.com/leapord/prometheusx/internal/model/do"
+	entity "github.com/leapord/prometheusx/internal/model/entity"
 )
 
 type sGroup struct{}

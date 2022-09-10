@@ -7,9 +7,9 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/gogf/gf/v2/util/guid"
-	v1 "github.com/leapord/prometheus_ext/api/v1"
-	service "github.com/leapord/prometheus_ext/internal/logic"
-	model "github.com/leapord/prometheus_ext/internal/model/do"
+	v1 "github.com/leapord/prometheusx/api/v1"
+	service "github.com/leapord/prometheusx/internal/logic"
+	model "github.com/leapord/prometheusx/internal/model/do"
 )
 
 type cGroup struct{}

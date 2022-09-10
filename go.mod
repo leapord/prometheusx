@@ -1,4 +1,4 @@
-module github.com/leapord/prometheus_ext
+module github.com/leapord/prometheusx
 
 go 1.18
 

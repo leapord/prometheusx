@@ -7,8 +7,8 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcmd"
 
-	"github.com/leapord/prometheus_ext/internal/controller"
-	"github.com/leapord/prometheus_ext/internal/middleware"
+	"github.com/leapord/prometheusx/internal/controller"
+	"github.com/leapord/prometheusx/internal/middleware"
 )
 
 var (
