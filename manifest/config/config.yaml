@@ -6,7 +6,7 @@ server:
 database:
   default:
     type: "mysql"
-    link: "root:root@tcp(127.0.0.1:3306)/prometheus_ext"
+    link: "root:root@tcp(127.0.0.1:3306)/prometheusx"
     debug: true
 
 profile:
