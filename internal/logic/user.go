@@ -56,3 +56,14 @@ func (u *sUser) Regist(ctx context.Context, user *model.User) (err error) {
 	}
 	return
 }
+
+func (s *sUser) CheckUser(ctx context.Context, loginName string) bool {
+	if cnt, err := g.Model(model.User{}).Where(model.User{
+		LoginName: loginName,
+	}).Count(); err == nil && cnt == 1 {
+		return true
+	} else {
+		g.Log().Error(ctx, err)
+	}
+	return false
+}

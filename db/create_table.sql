@@ -10,6 +10,11 @@ CREATE TABLE user(
     PRIMARY KEY (id)
 )  COMMENT = '用户表';
 
+CREATE UNIQUE INDEX user_idx_login_name ON user(login_name);
+CREATE UNIQUE INDEX user_idx_email ON user(email);
+CREATE UNIQUE INDEX user_idx_phone_number ON user(phone_number);
+
+
 DROP TABLE IF EXISTS node;
 CREATE TABLE node(
     id bigint NOT NULL AUTO_INCREMENT  COMMENT '主键' ,

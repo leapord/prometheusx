@@ -19,7 +19,10 @@ var (
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
 			s.Group("/", func(group *ghttp.RouterGroup) {
-				group.Middleware(ghttp.MiddlewareHandlerResponse)
+				group.Middleware(
+					ghttp.MiddlewareHandlerResponse,
+					middleware.GlobalExceptionMiddleware,
+				)
 				group.Bind(
 					controller.Hello,
 					controller.Authentication,
@@ -29,6 +32,7 @@ var (
 				group.Middleware(
 					ghttp.MiddlewareHandlerResponse,
 					middleware.TokenMiddleware,
+					middleware.GlobalExceptionMiddleware,
 				)
 				group.Bind(
 					controller.Group,
