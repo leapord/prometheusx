@@ -1,10 +1,10 @@
 {
-  "name": "prometheus_ext",
-  "describe": "prometheus_ext",
+  "name": "prometheusx",
+  "describe": "prometheusx",
   "avatar": "",
-  "version": "4.1.4",
+  "version": "4.1.1",
   "createdTime": "2022-9-6 17:44:38",
-  "updatedTime": "2022-9-9 11:53:26",
+  "updatedTime": "2022-9-11 21:22:46",
   "dbConns": [],
   "profile": {
     "default": {
@@ -585,7 +585,50 @@
         }
       ],
       "correlations": [],
-      "indexes": []
+      "indexes": [
+        {
+          "defKey": "user_idx_login_name",
+          "defName": null,
+          "unique": true,
+          "comment": "",
+          "fields": [
+            {
+              "fieldDefKey": "076C70EB-FE82-4210-A18E-0C31152F7CA9",
+              "ascOrDesc": "A",
+              "id": "6DEE0509-71E2-456C-AB40-9E2D7F9DB62E"
+            }
+          ],
+          "id": "721EE17C-01FE-4B6E-B7C4-45D3B03FD92F"
+        },
+        {
+          "defKey": "user_idx_email",
+          "defName": null,
+          "unique": true,
+          "comment": "",
+          "fields": [
+            {
+              "fieldDefKey": "8A553D16-CB11-410B-94C2-DDC9DF026528",
+              "ascOrDesc": "A",
+              "id": "1F4DFA66-BA11-4B93-9CF8-ECBB0BD840A7"
+            }
+          ],
+          "id": "6F8DBFD7-CDE7-4A76-B6D0-2D31AE3D3E2E"
+        },
+        {
+          "defKey": "user_idx_phone_number",
+          "defName": null,
+          "unique": true,
+          "comment": "",
+          "fields": [
+            {
+              "fieldDefKey": "7CD2C53E-AFC3-4194-8AE6-E1ADB11F7524",
+              "ascOrDesc": "A",
+              "id": "99B0D681-BC2E-4C68-8ADF-AF0F580B985F"
+            }
+          ],
+          "id": "0E99E5AC-7B0A-4D08-AD85-D7DE4EB33D2C"
+        }
+      ]
     },
     {
       "id": "3F349BB8-EB7D-4AF2-A37E-3C55F66A51A9",
