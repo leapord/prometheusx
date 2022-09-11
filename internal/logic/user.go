@@ -10,7 +10,6 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/leapord/prometheusx/internal/consts"
-	"github.com/leapord/prometheusx/internal/model/do"
 	model "github.com/leapord/prometheusx/internal/model/do"
 )
 
@@ -21,7 +20,7 @@ var (
 )
 
 func (u *sUser) Login(ctx context.Context, loginName *string, password *string) (token string, err error) {
-	user := do.User{}
+	user := model.User{}
 	errUser := g.Model(model.User{}).Where(model.User{LoginName: loginName, Password: password}).Scan(&user)
 
 	if errUser != nil {
