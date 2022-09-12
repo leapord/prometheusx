@@ -7,3 +7,13 @@ gfcli:
         - link:  "mysql:root:root@tcp(127.0.0.1:3306)/prometheusx"
           tables:  "user,group,node"
           jsonCase: "CamelLower"
+    build:
+      name:      "promtheusx"
+      arch:      "amd64,arm64"
+      system:    "linux,windows,darwin"
+      mod:       "none"
+      cgo:       0
+      packSrc:   "resource/i18n,resource/public,resource/template"
+      version:   "v1.0"
+      output:    "./bin"
+      extra:     ""
