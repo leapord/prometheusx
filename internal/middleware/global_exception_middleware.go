@@ -21,7 +21,7 @@ func GlobalExceptionMiddleware(r *ghttp.Request) {
 		src := err.Error()
 		errorString := gstr.SubStr(src, 0, gstr.PosI(src, ","))
 		r.Response.ClearBuffer()
-		r.Response.Writeln(g.Map{
+		r.Response.WriteJson(g.Map{
 			"code":    405,
 			"message": errorString,
 		})
