@@ -18,6 +18,8 @@ var (
 		Brief: "start http server",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
+			s.SetIndexFolder(true)
+			s.SetServerRoot("resource/public/html")
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				group.Middleware(
 					ghttp.MiddlewareHandlerResponse,
