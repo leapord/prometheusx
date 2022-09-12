@@ -15,6 +15,7 @@ var (
 	Node = sNode{}
 )
 
+// 添加
 func (s *sNode) AddNode(ctx context.Context, node *model.Node) (err error) {
 	node.CreateTime = gtime.Now()
 	id, err := g.Model(model.Node{}).InsertAndGetId(node)
@@ -27,6 +28,7 @@ func (s *sNode) AddNode(ctx context.Context, node *model.Node) (err error) {
 	return
 }
 
+// 修改
 func (s *sNode) UpdateNode(ctx context.Context, node *model.Node) (err error) {
 	gmodel := g.Model(model.Node{})
 
@@ -42,6 +44,7 @@ func (s *sNode) UpdateNode(ctx context.Context, node *model.Node) (err error) {
 	return
 }
 
+// 删除
 func (s *sNode) RemoveNode(ctx context.Context, id int) (node model.Node, err error) {
 	if err = g.Model(model.Node{}).Where(model.Node{Id: id}).Scan(&node); err == nil {
 		if _, err = g.Model(model.Node{}).Delete(model.Node{Id: id}); err != nil {
@@ -54,6 +57,7 @@ func (s *sNode) RemoveNode(ctx context.Context, id int) (node model.Node, err er
 	return
 }
 
+// 单个详情
 func (s *sNode) DetailNode(ctx context.Context, id int) (node model.Node, err error) {
 	if err = g.Model(model.Node{}).Where(model.Node{Id: id}).Scan(&node); err != nil {
 		g.Log().Info(ctx, "record not found id : ", id)
@@ -62,6 +66,7 @@ func (s *sNode) DetailNode(ctx context.Context, id int) (node model.Node, err er
 	return
 }
 
+// 分页
 func (s *sNode) Page(ctx context.Context, pageNo int, pageSize int, node model.Node) (total int, models []model.Node, err error) {
 	gmodel := g.Model(model.Node{})
 
@@ -91,5 +96,11 @@ func (s *sNode) Page(ctx context.Context, pageNo int, pageSize int, node model.N
 		g.Log().Error(ctx, err)
 	}
 
+	return
+}
+
+// 改变active状态
+func (s *sNode) Active(ctx context.Context, id int, active bool) (err error) {
+	_, err = g.Model(model.Node{}).Where(model.Node{Id: id}).UpdateAndGetAffected(model.Node{Active: active})
 	return
 }

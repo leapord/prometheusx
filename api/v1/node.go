@@ -74,3 +74,13 @@ type NodePageRes struct {
 	Total    int `json:"total" dc:"total record for this query condition"`
 	Models   interface{}
 }
+
+type NodeActiveReq struct {
+	g.Meta `path:"/node/active" tags:"node" method:"post" summary:"node active status change"`
+	Id     int  `p:"id" v:"required" dc:"Node record id"`
+	Active bool `p:"active" v:"required|boolean" dc:"Node active status true or false"`
+}
+
+type NodeActiveRes struct {
+	g.Meta `mime:"application/json"`
+}

@@ -18,4 +18,5 @@ type Node struct {
 	Group      string      `json:"group"      ` // 组名
 	Labels     string      `json:"labels"     ` // 标签 对应 prometheus中的label配置选项
 	CreateTime *gtime.Time `json:"createTime" ` // 创建时间
+	Active     string      `json:"active"     ` // 是否启用
 }

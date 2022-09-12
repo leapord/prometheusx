@@ -28,6 +28,7 @@ type NodeColumns struct {
 	Group      string // 组名
 	Labels     string // 标签 对应 prometheus中的label配置选项
 	CreateTime string // 创建时间
+	Active     string // 是否启用
 }
 
 //  nodeColumns holds the columns for table node.
@@ -40,6 +41,7 @@ var nodeColumns = NodeColumns{
 	Group:      "group",
 	Labels:     "labels",
 	CreateTime: "create_time",
+	Active:     "active",
 }
 
 // NewNodeDao creates and returns a new DAO object for table data access.

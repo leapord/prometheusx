@@ -97,3 +97,8 @@ func (c *cNode) PageNode(ctx context.Context, req *v1.NodePageReq) (res *v1.Node
 	}
 	return
 }
+
+func (c *cNode) ChanageActiveStatus(ctx context.Context, req *v1.NodeActiveReq) (res *v1.NodeActiveRes, err error) {
+	err = service.Node.Active(ctx, req.Id, req.Active)
+	return
+}

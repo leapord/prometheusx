@@ -37,6 +37,7 @@ var (
 				group.Bind(
 					controller.Group,
 					controller.Node,
+					controller.User,
 				)
 			})
 			s.Run()

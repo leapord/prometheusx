@@ -14,6 +14,7 @@ CREATE UNIQUE INDEX user_idx_login_name ON user(login_name);
 CREATE UNIQUE INDEX user_idx_email ON user(email);
 CREATE UNIQUE INDEX user_idx_phone_number ON user(phone_number);
 
+INSERT INTO `prometheusx`.`user`(`id`, `name`, `login_name`, `password`, `create_time`, `email`, `phone_number`) VALUES (1, 'leapord', 'leapord', 'f4fc8a416f8be148db91d57412cc34a0', '2022-09-12 00:55:05', 'leapord@email.com', '13100225566');
 
 DROP TABLE IF EXISTS node;
 CREATE TABLE node(
@@ -25,8 +26,10 @@ CREATE TABLE node(
     `group` VARCHAR(255) NOT NULL   COMMENT '组名' ,
     labels VARCHAR(255)    COMMENT '标签 对应 prometheus中的label配置选项' ,
     create_time DATETIME   DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
+    active VARCHAR(255)   DEFAULT true COMMENT '是否启用' ,
     PRIMARY KEY (id)
 )  COMMENT = '主机';
+
 
 
 CREATE UNIQUE INDEX node_idx_hosts ON node(host,port);
@@ -48,7 +51,7 @@ CREATE TABLE namespace(
     id bigint NOT NULL AUTO_INCREMENT  COMMENT '主键' ,
     name VARCHAR(255) NOT NULL   COMMENT '名称' ,
     identification VARCHAR(255) NOT NULL   COMMENT '标识' ,
-    create_time DATETIME    COMMENT '创建时间' ,
+    create_time DATETIME  DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
     PRIMARY KEY (id)
 )  COMMENT = '命名空间';
 

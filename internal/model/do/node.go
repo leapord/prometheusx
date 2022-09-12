@@ -20,4 +20,5 @@ type Node struct {
 	Group      interface{} // 组名
 	Labels     interface{} // 标签 对应 prometheus中的label配置选项
 	CreateTime *gtime.Time // 创建时间
+	Active     interface{} // 是否启用
 }

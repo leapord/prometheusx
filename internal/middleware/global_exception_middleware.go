@@ -3,7 +3,6 @@ package middleware
 import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
-	"github.com/gogf/gf/v2/os/gctx"
 	"github.com/gogf/gf/v2/text/gstr"
 )
 
@@ -14,7 +13,6 @@ func GlobalExceptionMiddleware(r *ghttp.Request) {
 	if err == nil {
 		return
 	}
-	g.Log().Error(gctx.New(), err)
 
 	// 重复主键处理
 	if gstr.ContainsI(err.Error(), "Duplicate entry") {
@@ -27,11 +25,23 @@ func GlobalExceptionMiddleware(r *ghttp.Request) {
 		})
 		return
 	}
+	// 找不到数据
+	if gstr.ContainsI(err.Error(), "sql: no rows in result set") {
+		r.Response.ClearBuffer()
+		r.Response.WriteJson(g.Map{
+			"code":    404,
+			"message": "数据不存在，请检查查询条件",
+		})
+		return
+	}
 
 	// 全局统一错误处理
 	if err != nil {
 		//返回固定的友好信息
 		r.Response.ClearBuffer()
-		r.Response.Writeln("服务器居然开小差了，请稍后再试吧！")
+		r.Response.WriteJson(g.Map{
+			"code":    500,
+			"message": "server busy, please retry after sometimes",
+		})
 	}
 }
