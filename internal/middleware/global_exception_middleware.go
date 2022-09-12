@@ -11,18 +11,20 @@ func GlobalExceptionMiddleware(r *ghttp.Request) {
 	r.Middleware.Next()
 	err := r.GetError()
 	// 记录到自定义错误日志文件
-	if err != nil {
-		g.Log().Error(gctx.New(), err)
-	} else {
+	if err == nil {
 		return
 	}
+	g.Log().Error(gctx.New(), err)
 
 	// 重复主键处理
 	if gstr.ContainsI(err.Error(), "Duplicate entry") {
 		src := err.Error()
 		errorString := gstr.SubStr(src, 0, gstr.PosI(src, ","))
 		r.Response.ClearBuffer()
-		r.Response.Writeln(errorString)
+		r.Response.Writeln(g.Map{
+			"code":    405,
+			"message": errorString,
+		})
 		return
 	}
 
