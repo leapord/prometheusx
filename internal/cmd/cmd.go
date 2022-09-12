@@ -20,7 +20,8 @@ var (
 			s := g.Server()
 			s.SetIndexFolder(true)
 			s.SetServerRoot("resource/public/html")
-			s.Group("/", func(group *ghttp.RouterGroup) {
+			// 无需权限
+			s.Group("/api", func(group *ghttp.RouterGroup) {
 				group.Middleware(
 					ghttp.MiddlewareHandlerResponse,
 					middleware.GlobalExceptionMiddleware,
@@ -31,6 +32,7 @@ var (
 					controller.Target,
 				)
 			})
+			// 权限验证
 			s.Group("/api", func(group *ghttp.RouterGroup) {
 				group.Middleware(
 					ghttp.MiddlewareHandlerResponse,
