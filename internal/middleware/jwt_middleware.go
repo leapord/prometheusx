@@ -28,8 +28,11 @@ func TokenMiddleware(r *ghttp.Request) {
 
 	token := r.GetHeader("token")
 	if g.IsEmpty(token) {
-		result := g.NewVar("请先登录")
-		r.Response.Writer.Write(result.Bytes())
+		result := g.Map{
+			"code":    402,
+			"message": "please login",
+		}
+		r.Response.WriteJson(result)
 		return
 	}
 
@@ -39,7 +42,11 @@ func TokenMiddleware(r *ghttp.Request) {
 	})
 
 	if err := personClaims.Valid(); err != nil {
-		r.Response.Writer.Write(g.NewVar("登录信息错误，请重新登录").Bytes())
+
+		r.Response.WriteJson(g.Map{
+			"code":    402,
+			"message": "login token error , please logout and login again",
+		})
 		g.Log().Errorf(r.Context(), "token error %s", err)
 		return
 	}
@@ -53,7 +60,10 @@ func TokenMiddleware(r *ghttp.Request) {
 		r.Header.Add("loginName", g.NewVar(u.LoginName).String())
 		r.Header.Add("phoneNumber", g.NewVar(u.PhoneNumber).String())
 	} else {
-		r.Response.Writer.Write(g.NewVar("登录信息错误，请重新登录").Bytes())
+		r.Response.WriteJson(g.Map{
+			"code":    402,
+			"message": "login user is not exist",
+		})
 		g.Log().Errorf(r.Context(), "user not exist %s", u.Name)
 		return
 	}

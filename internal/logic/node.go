@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
 	model "github.com/leapord/prometheusx/internal/model/do"
@@ -102,5 +103,41 @@ func (s *sNode) Page(ctx context.Context, pageNo int, pageSize int, node model.N
 // 改变active状态
 func (s *sNode) Active(ctx context.Context, id int, active bool) (err error) {
 	_, err = g.Model(model.Node{}).Where(model.Node{Id: id}).UpdateAndGetAffected(model.Node{Active: active})
+	return
+}
+
+func (s *sNode) Target(ctx context.Context) (result string, err error) {
+	nodes := []model.Node{}
+	err = g.Model(model.Node{}).Where(model.Node{Active: true}).Scan(&nodes)
+	if err != nil {
+		g.Log().Error(ctx, err)
+		return
+	}
+	list := g.List{}
+
+	for i := 0; i < len(nodes); i++ {
+		node := nodes[i]
+		labels := g.Map{
+			"owner":    node.Owner,
+			"job_name": node.JobName,
+			"group":    node.Group,
+		}
+
+		nodeLabels := node.Labels
+
+		if nodeLabels != nil && gjson.Valid(nodeLabels) {
+			nodeLabelsJson := g.NewVar(nodeLabels).Map()
+			for key, value := range nodeLabelsJson {
+				labels[key] = value
+			}
+		}
+
+		list = append(list, g.Map{
+			"targets": g.NewVar(node.Host).String() + ":" + g.NewVar(node.Port).String(),
+			"labels":  labels,
+		})
+	}
+
+	result = gjson.MustEncodeString(list)
 	return
 }

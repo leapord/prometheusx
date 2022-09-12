@@ -26,6 +26,7 @@ var (
 				group.Bind(
 					controller.Hello,
 					controller.Authentication,
+					controller.Target,
 				)
 			})
 			s.Group("/api", func(group *ghttp.RouterGroup) {
