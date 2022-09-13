@@ -8,8 +8,8 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
 	v1 "github.com/leapord/prometheusx/api/v1"
-	service "github.com/leapord/prometheusx/internal/logic"
 	model "github.com/leapord/prometheusx/internal/model/do"
+	"github.com/leapord/prometheusx/internal/service"
 )
 
 var (
@@ -24,7 +24,7 @@ func (a *cAuthentication) Login(ctx context.Context, req *v1.LoginReq) (res *v1.
 		g.Log().Error(ctx, err)
 		return
 	}
-	token, err := service.User.Login(ctx, &req.LoginName, &pwd)
+	token, err := service.User().Login(ctx, &req.LoginName, &pwd)
 	res = &v1.LoginRes{Token: token}
 	return
 }
@@ -42,7 +42,7 @@ func (a *cAuthentication) RegisterUser(ctx context.Context, req *v1.RegisterReq)
 		Email:       req.Email,
 		CreateTime:  gtime.Now(),
 	}
-	err = service.User.Regist(ctx, user)
+	err = service.User().Regist(ctx, user)
 
 	return
 }

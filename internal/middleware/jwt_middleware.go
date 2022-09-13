@@ -8,8 +8,8 @@ import (
 	"github.com/gogf/gf/v2/os/gctx"
 	jwtUtil "github.com/golang-jwt/jwt/v4"
 	"github.com/leapord/prometheusx/internal/consts"
-	service "github.com/leapord/prometheusx/internal/logic"
 	"github.com/leapord/prometheusx/internal/model/do"
+	"github.com/leapord/prometheusx/internal/service"
 )
 
 func TokenMiddleware(r *ghttp.Request) {
@@ -54,7 +54,7 @@ func TokenMiddleware(r *ghttp.Request) {
 	userString := personClaims.Subject
 	u := do.User{}
 	json.Unmarshal(g.NewVar(userString).Bytes(), &u)
-	if service.User.CheckUser(ctx, g.NewVar(u.LoginName).String()) {
+	if service.User().CheckUser(ctx, g.NewVar(u.LoginName).String()) {
 		r.Header.Add("username", g.NewVar(u.Name).String())
 		r.Header.Add("email", g.NewVar(u.Email).String())
 		r.Header.Add("loginName", g.NewVar(u.LoginName).String())

@@ -8,8 +8,8 @@ import (
 	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/gogf/gf/v2/util/guid"
 	v1 "github.com/leapord/prometheusx/api/v1"
-	service "github.com/leapord/prometheusx/internal/logic"
 	model "github.com/leapord/prometheusx/internal/model/do"
+	"github.com/leapord/prometheusx/internal/service"
 )
 
 type cGroup struct{}
@@ -24,7 +24,7 @@ func (c *cGroup) AddGroup(ctx context.Context, req *v1.GroupAddReq) (res v1.Grou
 		Identification: guid.S(),
 		CreateTime:     gtime.Now(),
 	}
-	err = service.Group.AddGroup(ctx, group)
+	err = service.Group().AddGroup(ctx, group)
 	if err == nil {
 		res.Model = group
 	}
@@ -37,7 +37,7 @@ func (c *cGroup) UpdateGroup(ctx context.Context, req *v1.GroupUpdateReq) (res *
 		Name: req.Name,
 	}
 
-	err = service.Group.UpdateGroup(ctx, group)
+	err = service.Group().UpdateGroup(ctx, group)
 	if err == nil {
 		res = &v1.GroupUpdateRes{
 			Model: group,
@@ -50,7 +50,7 @@ func (c *cGroup) UpdateGroup(ctx context.Context, req *v1.GroupUpdateReq) (res *
 }
 
 func (c *cGroup) DeleteGroup(ctx context.Context, req *v1.GroupDeleteReq) (res *v1.GroupDeleteRes, err error) {
-	group, err := service.Group.DeleteById(ctx, gconv.Int(req.Id))
+	group, err := service.Group().DeleteById(ctx, gconv.Int(req.Id))
 	if err == nil {
 		res = &v1.GroupDeleteRes{
 			Model: group,
@@ -62,7 +62,7 @@ func (c *cGroup) DeleteGroup(ctx context.Context, req *v1.GroupDeleteReq) (res *
 }
 
 func (c *cGroup) DetailGroup(ctx context.Context, req *v1.GroupDetailReq) (res *v1.GroupDetailRes, err error) {
-	group, err := service.Group.Detail(ctx, gconv.Int(req.Id))
+	group, err := service.Group().Detail(ctx, gconv.Int(req.Id))
 	if err == nil {
 		res = &v1.GroupDetailRes{
 			Model: group,
@@ -76,7 +76,7 @@ func (c *cGroup) Page(ctx context.Context, req *v1.GroupPageReq) (res *v1.GroupP
 	if !g.IsEmpty(req.Name) {
 		group.Name = req.Name
 	}
-	list, total, err := service.Group.Page(ctx, *group, (req.PageNo-1)*req.PageSize, req.PageSize)
+	list, total, err := service.Group().Page(ctx, *group, (req.PageNo-1)*req.PageSize, req.PageSize)
 	if err == nil {
 		res = &v1.GroupPageRes{
 			Total:    total,
@@ -89,7 +89,7 @@ func (c *cGroup) Page(ctx context.Context, req *v1.GroupPageReq) (res *v1.GroupP
 }
 
 func (c *cGroup) List(ctx context.Context, req *v1.GroupListReq) (res *v1.GroupListRes, err error) {
-	groups, err := service.Group.List(ctx)
+	groups, err := service.Group().List(ctx)
 	if err == nil {
 		res = &v1.GroupListRes{
 			Model: groups,

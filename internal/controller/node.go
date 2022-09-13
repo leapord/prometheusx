@@ -5,8 +5,8 @@ import (
 
 	"github.com/gogf/gf/v2/frame/g"
 	v1 "github.com/leapord/prometheusx/api/v1"
-	service "github.com/leapord/prometheusx/internal/logic"
 	model "github.com/leapord/prometheusx/internal/model/do"
+	"github.com/leapord/prometheusx/internal/service"
 )
 
 type cNode struct{}
@@ -24,7 +24,7 @@ func (c *cNode) AddNode(ctx context.Context, req *v1.NodeAddReq) (res v1.NodeAdd
 		Group:   req.Group,
 		JobName: req.JobName,
 	}
-	err = service.Node.AddNode(ctx, &node)
+	err = service.Node().AddNode(ctx, &node)
 	if err == nil {
 		res.Model = node
 	}
@@ -44,7 +44,7 @@ func (c *cNode) UpdateNode(ctx context.Context, req *v1.NodeUpdateReq) (res *v1.
 	if req.Labels != nil {
 		node.Labels = req.Labels
 	}
-	err = service.Node.UpdateNode(ctx, &node)
+	err = service.Node().UpdateNode(ctx, &node)
 
 	if err == nil {
 		res = &v1.NodeUpdateRes{
@@ -57,7 +57,7 @@ func (c *cNode) UpdateNode(ctx context.Context, req *v1.NodeUpdateReq) (res *v1.
 
 // 删除
 func (c *cNode) RemoveNode(ctx context.Context, req *v1.NodeRemoveReq) (res *v1.NodeRemoveRes, err error) {
-	node, err := service.Node.RemoveNode(ctx, g.NewVar(req.Id).Int())
+	node, err := service.Node().RemoveNode(ctx, g.NewVar(req.Id).Int())
 	if err == nil {
 		res = &v1.NodeRemoveRes{
 			Model: node,
@@ -68,7 +68,7 @@ func (c *cNode) RemoveNode(ctx context.Context, req *v1.NodeRemoveReq) (res *v1.
 
 // 详情
 func (c *cNode) DetilNode(ctx context.Context, req *v1.NodeDetailReq) (res *v1.NodeDetailRes, err error) {
-	node, err := service.Node.DetailNode(ctx, g.NewVar(req.Id).Int())
+	node, err := service.Node().DetailNode(ctx, g.NewVar(req.Id).Int())
 	if err == nil {
 		res = &v1.NodeDetailRes{
 			Model: node,
@@ -77,7 +77,7 @@ func (c *cNode) DetilNode(ctx context.Context, req *v1.NodeDetailReq) (res *v1.N
 	return
 }
 
-//分页查询
+// 分页查询
 func (c *cNode) PageNode(ctx context.Context, req *v1.NodePageReq) (res *v1.NodePageRes, err error) {
 	node := model.Node{
 		Host:    req.Host,
@@ -86,7 +86,7 @@ func (c *cNode) PageNode(ctx context.Context, req *v1.NodePageReq) (res *v1.Node
 		JobName: req.JobName,
 		Owner:   req.Owner,
 	}
-	total, models, err := service.Node.Page(ctx, g.NewVar(req.PageNo).Int(), g.NewVar(req.PageSize).Int(), node)
+	total, models, err := service.Node().Page(ctx, g.NewVar(req.PageNo).Int(), g.NewVar(req.PageSize).Int(), node)
 	if err == nil {
 		res = &v1.NodePageRes{
 			PageNo:   req.PageNo,
@@ -99,6 +99,6 @@ func (c *cNode) PageNode(ctx context.Context, req *v1.NodePageReq) (res *v1.Node
 }
 
 func (c *cNode) ChanageActiveStatus(ctx context.Context, req *v1.NodeActiveReq) (res *v1.NodeActiveRes, err error) {
-	err = service.Node.Active(ctx, req.Id, req.Active)
+	err = service.Node().Active(ctx, req.Id, req.Active)
 	return
 }

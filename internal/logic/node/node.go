@@ -8,13 +8,18 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
 	model "github.com/leapord/prometheusx/internal/model/do"
+	"github.com/leapord/prometheusx/internal/service"
 )
 
 type sNode struct{}
 
-var (
-	Node = sNode{}
-)
+func New() *sNode {
+	return &sNode{}
+}
+
+func init() {
+	service.RegisterNode(New())
+}
 
 // 添加
 func (s *sNode) AddNode(ctx context.Context, node *model.Node) (err error) {

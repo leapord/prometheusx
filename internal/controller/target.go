@@ -6,7 +6,7 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 
 	v1 "github.com/leapord/prometheusx/api/v1"
-	service "github.com/leapord/prometheusx/internal/logic"
+	"github.com/leapord/prometheusx/internal/service"
 )
 
 type cTarget struct{}
@@ -17,7 +17,7 @@ var (
 
 func (c *cTarget) Node(ctx context.Context, req *v1.NodeTargetReq) (res *v1.NodeActiveRes, err error) {
 	resp := g.RequestFromCtx(ctx).Response
-	json, err := service.Node.Target(ctx)
+	json, err := service.Node().Target(ctx)
 	resp.WriteJson(json)
 	return
 }

@@ -12,13 +12,18 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/leapord/prometheusx/internal/consts"
 	model "github.com/leapord/prometheusx/internal/model/do"
+	"github.com/leapord/prometheusx/internal/service"
 )
 
 type sUser struct{}
 
-var (
-	User = sUser{}
-)
+func New() *sUser {
+	return &sUser{}
+}
+
+func init() {
+	service.RegisterUser(New())
+}
 
 // 登陆 并生成Token
 func (u *sUser) Login(ctx context.Context, loginName *string, password *string) (token string, err error) {

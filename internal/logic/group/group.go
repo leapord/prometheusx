@@ -6,13 +6,18 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 	model "github.com/leapord/prometheusx/internal/model/do"
 	entity "github.com/leapord/prometheusx/internal/model/entity"
+	"github.com/leapord/prometheusx/internal/service"
 )
 
 type sGroup struct{}
 
-var (
-	Group = sGroup{}
-)
+func init() {
+	service.RegisterGroup(New())
+}
+
+func New() *sGroup {
+	return &sGroup{}
+}
 
 func (s *sGroup) AddGroup(ctx context.Context, group *model.Group) (err error) {
 	group.Id, err = g.Model(model.Group{}).InsertAndGetId(group)

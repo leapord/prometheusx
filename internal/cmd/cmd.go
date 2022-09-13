@@ -21,30 +21,32 @@ var (
 			s.SetIndexFolder(true)
 			s.SetServerRoot("resource/public/html")
 			// 无需权限
-			s.Group("/api", func(group *ghttp.RouterGroup) {
+			s.Group("/", func(group *ghttp.RouterGroup) {
 				group.Middleware(
 					ghttp.MiddlewareHandlerResponse,
 					middleware.GlobalExceptionMiddleware,
 				)
-				group.Bind(
-					controller.Hello,
-					controller.Authentication,
-					controller.Target,
-				)
+				// 无需权限
+				group.Group("/api", func(group *ghttp.RouterGroup) {
+					group.Bind(
+						controller.Hello,
+						controller.Authentication,
+						controller.Target,
+					)
+				})
+				// 权限验证
+				group.Group("/api", func(group *ghttp.RouterGroup) {
+					group.Middleware(
+						middleware.TokenMiddleware,
+					)
+					group.Bind(
+						controller.Group,
+						controller.Node,
+						controller.User,
+					)
+				})
 			})
-			// 权限验证
-			s.Group("/api", func(group *ghttp.RouterGroup) {
-				group.Middleware(
-					ghttp.MiddlewareHandlerResponse,
-					middleware.TokenMiddleware,
-					middleware.GlobalExceptionMiddleware,
-				)
-				group.Bind(
-					controller.Group,
-					controller.Node,
-					controller.User,
-				)
-			})
+
 			s.Run()
 			return nil
 		},
