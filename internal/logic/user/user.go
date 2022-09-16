@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gogf/gf/v2/crypto/gmd5"
+	"github.com/gogf/gf/v2/encoding/gjson"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/golang-jwt/jwt/v4"
@@ -26,7 +27,7 @@ func init() {
 }
 
 // 登陆 并生成Token
-func (u *sUser) Login(ctx context.Context, loginName *string, password *string) (token string, err error) {
+func (u *sUser) Login(ctx context.Context, loginName *string, password *string) (token string, userJson string, err error) {
 	user := model.User{}
 	errUser := g.Model(model.User{}).Where(model.User{LoginName: loginName, Password: password}).Scan(&user)
 
@@ -47,6 +48,8 @@ func (u *sUser) Login(ctx context.Context, loginName *string, password *string) 
 	}
 
 	token, err = jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(g.NewVar(consts.JWT_SCRET).Bytes())
+	user.Password = nil
+	userJson = gjson.MustEncodeString(user)
 	return
 }
 

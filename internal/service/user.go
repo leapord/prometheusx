@@ -12,7 +12,7 @@ import (
 )
 
 type IUser interface {
-	Login(ctx context.Context, loginName *string, password *string) (token string, err error)
+	Login(ctx context.Context, loginName *string, password *string) (token string, userJson string, err error)
 	Regist(ctx context.Context, user *model.User) (err error)
 	CheckUser(ctx context.Context, loginName string) bool
 	Add(ctx context.Context, user model.User) (id int64, err error)

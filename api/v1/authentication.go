@@ -7,11 +7,12 @@ import (
 type LoginReq struct {
 	g.Meta    `path:"/login" tags:"Login" method:"post" summary:"user login api"`
 	LoginName string `p:"loginName" v:"required" dc:"user's login name"`
-	Password  string `p:"password" v:"password3#密码6位字符必须包含大小写字母、数字和特殊字符" dc:"password"`
+	Password  string `p:"password" v:"required" dc:"password"`
 }
 type LoginRes struct {
-	g.Meta `mime:"text/html" example:"success"`
-	Token  string `p:"token" dc:"login token"`
+	g.Meta   `mime:"text/html" example:"success"`
+	Token    string `json:"token" dc:"login token"`
+	UserInfo string `json:"userInfo" dc:"user detail without password"`
 }
 
 type RegisterReq struct {

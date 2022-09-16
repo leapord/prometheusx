@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 
-	"github.com/gogf/gf/v2/crypto/gmd5"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/os/gtime"
 	v1 "github.com/leapord/prometheusx/api/v1"
@@ -19,13 +18,13 @@ var (
 type cAuthentication struct{}
 
 func (a *cAuthentication) Login(ctx context.Context, req *v1.LoginReq) (res *v1.LoginRes, err error) {
-	pwd, err := gmd5.Encrypt(req.Password)
+	pwd := req.Password
 	if err != nil {
 		g.Log().Error(ctx, err)
 		return
 	}
-	token, err := service.User().Login(ctx, &req.LoginName, &pwd)
-	res = &v1.LoginRes{Token: token}
+	token, user, err := service.User().Login(ctx, &req.LoginName, &pwd)
+	res = &v1.LoginRes{Token: token, UserInfo: user}
 	return
 }
 
