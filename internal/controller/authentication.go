@@ -24,6 +24,7 @@ func (a *cAuthentication) Login(ctx context.Context, req *v1.LoginReq) (res *v1.
 		return
 	}
 	token, user, err := service.User().Login(ctx, &req.LoginName, &pwd)
+
 	res = &v1.LoginRes{Token: token, UserInfo: user}
 	return
 }

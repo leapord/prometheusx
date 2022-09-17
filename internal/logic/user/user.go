@@ -8,6 +8,7 @@ import (
 
 	"github.com/gogf/gf/v2/crypto/gmd5"
 	"github.com/gogf/gf/v2/encoding/gjson"
+	"github.com/gogf/gf/v2/errors/gcode"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/golang-jwt/jwt/v4"
@@ -34,6 +35,10 @@ func (u *sUser) Login(ctx context.Context, loginName *string, password *string) 
 	if errUser != nil {
 		g.Log().Error(ctx, err)
 		err = errUser
+		return
+	}
+	if g.IsNil(user) {
+		err = gerror.NewCode(gcode.CodeNotFound, "用户不存在")
 		return
 	}
 
