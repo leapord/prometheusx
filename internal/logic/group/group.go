@@ -20,7 +20,7 @@ func New() *sGroup {
 }
 
 func (s *sGroup) AddGroup(ctx context.Context, group *model.Group) (err error) {
-	group.Id, err = g.Model(model.Group{}).InsertAndGetId(group)
+	group.Id, err = g.Model(entity.Group{}).InsertAndGetId(group)
 	if err != nil {
 		g.Log().Error(ctx, err)
 	} else {
@@ -30,15 +30,15 @@ func (s *sGroup) AddGroup(ctx context.Context, group *model.Group) (err error) {
 }
 
 func (s *sGroup) UpdateGroup(ctx context.Context, group *model.Group) (err error) {
-	_, err = g.Model(model.Group{}).UpdateAndGetAffected(group)
+	_, err = g.Model(entity.Group{}).UpdateAndGetAffected(group)
 	if err != nil {
 		g.Log().Error(ctx, err)
 	}
 	return
 }
 
-func (s *sGroup) DeleteById(ctx context.Context, id int) (group model.Group, err error) {
-	gmodel := g.Model(model.Group{})
+func (s *sGroup) DeleteById(ctx context.Context, id int) (group entity.Group, err error) {
+	gmodel := g.Model(entity.Group{})
 	err = gmodel.Where(model.Group{Id: id}).Scan(&group)
 	if err != nil {
 		return
@@ -47,7 +47,7 @@ func (s *sGroup) DeleteById(ctx context.Context, id int) (group model.Group, err
 	return
 }
 
-func (s *sGroup) Detail(ctx context.Context, id int) (group model.Group, err error) {
+func (s *sGroup) Detail(ctx context.Context, id int) (group entity.Group, err error) {
 	err = g.Model(model.Group{}).Where(model.Group{
 		Id: id,
 	}).Scan(&group)
@@ -57,8 +57,8 @@ func (s *sGroup) Detail(ctx context.Context, id int) (group model.Group, err err
 	return
 }
 
-func (s *sGroup) Page(ctx context.Context, group model.Group, pageNo int, pageSize int) (list []model.Group, total int, err error) {
-	gmodel := g.Model(model.Group{}).Where(group)
+func (s *sGroup) Page(ctx context.Context, group model.Group, pageNo int, pageSize int) (list []entity.Group, total int, err error) {
+	gmodel := g.Model(entity.Group{}).Where(group)
 	total, err = gmodel.Count()
 	if err != nil {
 		g.Log().Error(ctx, err)
@@ -74,7 +74,7 @@ func (s *sGroup) Page(ctx context.Context, group model.Group, pageNo int, pageSi
 }
 
 func (s *sGroup) List(ctx context.Context) (groups []entity.Group, err error) {
-	err = g.Model(model.Group{}).Scan(&groups)
+	err = g.Model(entity.Group{}).Scan(&groups)
 	if err != nil {
 		g.Log().Error(ctx, err)
 	}

@@ -9,14 +9,15 @@ import (
 	"context"
 
 	model "github.com/leapord/prometheusx/internal/model/do"
+	entity "github.com/leapord/prometheusx/internal/model/entity"
 )
 
 type INode interface {
 	AddNode(ctx context.Context, node *model.Node) (err error)
 	UpdateNode(ctx context.Context, node *model.Node) (err error)
-	RemoveNode(ctx context.Context, id int) (node model.Node, err error)
-	DetailNode(ctx context.Context, id int) (node model.Node, err error)
-	Page(ctx context.Context, pageNo int, pageSize int, node model.Node) (total int, models []model.Node, err error)
+	RemoveNode(ctx context.Context, id int) (node entity.Node, err error)
+	DetailNode(ctx context.Context, id int) (node entity.Node, err error)
+	Page(ctx context.Context, pageNo int, pageSize int, node model.Node) (total int, models []entity.Node, err error)
 	Active(ctx context.Context, id int, active bool) (err error)
 	Target(ctx context.Context) (result string, err error)
 }

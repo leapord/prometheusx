@@ -9,6 +9,7 @@ import (
 	"context"
 
 	model "github.com/leapord/prometheusx/internal/model/do"
+	entity "github.com/leapord/prometheusx/internal/model/entity"
 )
 
 type IUser interface {
@@ -17,9 +18,9 @@ type IUser interface {
 	CheckUser(ctx context.Context, loginName string) bool
 	Add(ctx context.Context, user model.User) (id int64, err error)
 	Update(ctx context.Context, user model.User) (err error)
-	Delete(ctx context.Context, id int) (user model.User, err error)
-	Detail(ctx context.Context, id int) (user model.User, err error)
-	Page(ctx context.Context, pageNo int, pageSize int, user model.User) (total int, users []model.User, err error)
+	Delete(ctx context.Context, id int) (user entity.User, err error)
+	Detail(ctx context.Context, id int) (user entity.User, err error)
+	Page(ctx context.Context, pageNo int, pageSize int, user model.User) (total int, users []entity.User, err error)
 }
 
 var localUser IUser

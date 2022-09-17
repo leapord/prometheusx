@@ -15,9 +15,9 @@ import (
 type IGroup interface {
 	AddGroup(ctx context.Context, group *model.Group) (err error)
 	UpdateGroup(ctx context.Context, group *model.Group) (err error)
-	DeleteById(ctx context.Context, id int) (group model.Group, err error)
-	Detail(ctx context.Context, id int) (group model.Group, err error)
-	Page(ctx context.Context, group model.Group, pageNo int, pageSize int) (list []model.Group, total int, err error)
+	DeleteById(ctx context.Context, id int) (group entity.Group, err error)
+	Detail(ctx context.Context, id int) (group entity.Group, err error)
+	Page(ctx context.Context, group model.Group, pageNo int, pageSize int) (list []entity.Group, total int, err error)
 	List(ctx context.Context) (groups []entity.Group, err error)
 }
 

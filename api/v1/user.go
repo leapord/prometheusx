@@ -48,7 +48,7 @@ type UserDetailRes struct {
 
 type UserPageReq struct {
 	g.Meta      `path:"/user/page" tags:"User" method:"post" summary:"find user by page"`
-	PageNo      int    `p:"pageNo" v:"min:1" d:"1" dc:"page number"`
+	PageNo      int    `p:"page" v:"min:1" d:"1" dc:"page number"`
 	PageSize    int    `p:"pageSize" v:"max:50" d:"10" dc:"page size"`
 	LoginName   string `p:"loginName" dc:"user's login name"`
 	Name        string `p:"name" dc:"user's name"`
@@ -58,8 +58,8 @@ type UserPageReq struct {
 
 type UserPageRes struct {
 	g.Meta   `mime:"application/json"`
-	Models   interface{} `json:"models"`
-	Total    int         `json:"total number of this condition"`
-	PageNo   int         `json:"pageNo"`
+	Models   interface{} `json:"rows"`
+	Total    int         `json:"total" dc:"number of this condition"`
+	PageNo   int         `json:"page"`
 	PageSize int         `json:"pageSize"`
 }

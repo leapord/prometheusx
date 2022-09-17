@@ -14,6 +14,7 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/leapord/prometheusx/internal/consts"
 	model "github.com/leapord/prometheusx/internal/model/do"
+	entity "github.com/leapord/prometheusx/internal/model/entity"
 	"github.com/leapord/prometheusx/internal/service"
 )
 
@@ -29,7 +30,7 @@ func init() {
 
 // 登陆 并生成Token
 func (u *sUser) Login(ctx context.Context, loginName *string, password *string) (token string, userJson string, err error) {
-	user := model.User{}
+	user := entity.User{}
 	errUser := g.Model(model.User{}).Where(model.User{LoginName: loginName, Password: password}).Scan(&user)
 
 	if errUser != nil {
@@ -53,7 +54,7 @@ func (u *sUser) Login(ctx context.Context, loginName *string, password *string) 
 	}
 
 	token, err = jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString(g.NewVar(consts.JWT_SCRET).Bytes())
-	user.Password = nil
+	user.Password = ""
 	userJson = gjson.MustEncodeString(user)
 	return
 }
@@ -66,7 +67,7 @@ func (u *sUser) Regist(ctx context.Context, user *model.User) (err error) {
 		return
 	}
 	user.Password = pwd
-	_, err = g.Model(model.User{}).Insert(user)
+	_, err = g.Model(entity.User{}).Insert(user)
 	if err != nil {
 		g.Log().Error(ctx, err)
 	}
@@ -75,7 +76,7 @@ func (u *sUser) Regist(ctx context.Context, user *model.User) (err error) {
 
 // 检查用户是否存在
 func (s *sUser) CheckUser(ctx context.Context, loginName string) bool {
-	if cnt, err := g.Model(model.User{}).Where(model.User{
+	if cnt, err := g.Model(entity.User{}).Where(model.User{
 		LoginName: loginName,
 	}).Count(); err == nil && cnt == 1 {
 		return true
@@ -87,7 +88,7 @@ func (s *sUser) CheckUser(ctx context.Context, loginName string) bool {
 
 // 添加
 func (s *sUser) Add(ctx context.Context, user model.User) (id int64, err error) {
-	id, err = g.Model(model.User{}).InsertAndGetId(user)
+	id, err = g.Model(entity.User{}).InsertAndGetId(user)
 	if err != nil {
 		g.Log().Error(ctx, err)
 	}
@@ -96,7 +97,7 @@ func (s *sUser) Add(ctx context.Context, user model.User) (id int64, err error) 
 
 // 修改
 func (s *sUser) Update(ctx context.Context, user model.User) (err error) {
-	_, err = g.Model(model.User{}).Where(model.User{Id: user.Id}).UpdateAndGetAffected(user)
+	_, err = g.Model(entity.User{}).Where(model.User{Id: user.Id}).UpdateAndGetAffected(user)
 	if err != nil {
 		g.Log().Error(ctx, err)
 	}
@@ -104,8 +105,8 @@ func (s *sUser) Update(ctx context.Context, user model.User) (err error) {
 }
 
 // 删除
-func (s *sUser) Delete(ctx context.Context, id int) (user model.User, err error) {
-	gmodel := g.Model(model.User{}).Where(model.User{Id: id})
+func (s *sUser) Delete(ctx context.Context, id int) (user entity.User, err error) {
+	gmodel := g.Model(entity.User{}).Where(model.User{Id: id})
 	cnt, err := gmodel.Count()
 	if err != nil || cnt != 1 {
 		err = gerror.New("can not find the user")
@@ -122,8 +123,8 @@ func (s *sUser) Delete(ctx context.Context, id int) (user model.User, err error)
 }
 
 // 单个详情
-func (s *sUser) Detail(ctx context.Context, id int) (user model.User, err error) {
-	err = g.Model(model.User{}).Where(model.User{Id: id}).Scan(&user)
+func (s *sUser) Detail(ctx context.Context, id int) (user entity.User, err error) {
+	err = g.Model(entity.User{}).Where(model.User{Id: id}).Scan(&user)
 	if err != nil {
 		g.Log().Error(ctx, err)
 	}
@@ -131,8 +132,8 @@ func (s *sUser) Detail(ctx context.Context, id int) (user model.User, err error)
 }
 
 // 分页
-func (s *sUser) Page(ctx context.Context, pageNo int, pageSize int, user model.User) (total int, users []model.User, err error) {
-	gmodel := g.Model(model.User{})
+func (s *sUser) Page(ctx context.Context, pageNo int, pageSize int, user model.User) (total int, users []entity.User, err error) {
+	gmodel := g.Model(entity.User{})
 
 	if !g.NewVar(user.Name).IsEmpty() {
 		gmodel.WhereLike("name", "%"+g.NewVar(user.Name).String()+"%")

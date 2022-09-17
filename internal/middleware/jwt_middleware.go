@@ -26,7 +26,7 @@ func TokenMiddleware(r *ghttp.Request) {
 		return
 	}
 
-	token := r.GetHeader("token")
+	token := r.GetHeader("Authorization")
 	if g.IsEmpty(token) {
 		result := g.Map{
 			"code":    402,

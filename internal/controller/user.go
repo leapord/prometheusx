@@ -7,6 +7,7 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 	v1 "github.com/leapord/prometheusx/api/v1"
 	model "github.com/leapord/prometheusx/internal/model/do"
+	entity "github.com/leapord/prometheusx/internal/model/entity"
 	"github.com/leapord/prometheusx/internal/service"
 )
 
@@ -69,6 +70,7 @@ func (c *cUser) RemoveUser(ctx context.Context, req *v1.UserRemoveReq) (res *v1.
 // 单个详情
 func (c *cUser) DetailUser(ctx context.Context, req *v1.UserDetailReq) (res *v1.UserDetailRes, err error) {
 	user, err := service.User().Detail(ctx, req.Id)
+	user.Password = ""
 	if err == nil {
 		res = &v1.UserDetailRes{
 			Model: user,
@@ -86,10 +88,15 @@ func (c *cUser) PageUser(ctx context.Context, req *v1.UserPageReq) (res *v1.User
 		PhoneNumber: req.PhoneNumber,
 	}
 	total, models, err := service.User().Page(ctx, req.PageNo, req.PageSize, user)
+	users := []entity.User{}
+	for _, v := range models {
+		v.Password = ""
+		users = append(users, v)
+	}
 	if err == nil {
 		res = &v1.UserPageRes{
 			Total:    total,
-			Models:   models,
+			Models:   users,
 			PageNo:   req.PageNo,
 			PageSize: req.PageSize,
 		}
