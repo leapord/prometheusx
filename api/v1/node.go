@@ -7,12 +7,12 @@ import "github.com/gogf/gf/v2/frame/g"
  */
 type NodeAddReq struct {
 	g.Meta  `path:"/node/add" tags:"node" method:"put" summary:"add node"`
-	Host    string      `p:"host" v:"required|ip" dc:"node host or ip"`
-	Port    string      `p:"port" v:"required|min:1|max:65535" dc:"node exporter port"`
-	Owner   string      `p:"owner" v:"required" dc:"this job record owner"`
-	Group   string      `p:"group" v:"required" dc:"group name"`
-	JobName string      `p:"jobName" v:"required" dc:"job name"`
-	Labels  g.MapAnyAny `p:"labels" dc:"extend pair values for job"`
+	Host    string `p:"host" v:"required|ip" dc:"node host or ip"`
+	Port    string `p:"port" v:"required|min:1|max:65535" dc:"node exporter port"`
+	Owner   string `p:"owner" v:"required" dc:"this job record owner"`
+	Group   string `p:"group" v:"required" dc:"group name"`
+	JobName string `p:"jobName" v:"required" dc:"job name"`
+	Labels  string `p:"labels" dc:"extend pair values for job"`
 }
 type NodeAddRes struct {
 	g.Meta `mime:"application/json"`
@@ -24,13 +24,13 @@ type NodeAddRes struct {
  */
 type NodeUpdateReq struct {
 	g.Meta  `path:"/node/update" tags:"node" method:"post" summary:"update node"`
-	Id      string      `p:"id" v:"required" dc:"node record id"`
-	Host    string      `p:"host" v:"required|ip" dc:"node host or ip"`
-	Port    string      `p:"port" v:"required|min:1|max:65535" dc:"node exporter port"`
-	Owner   string      `p:"owner" v:"required" dc:"this job record owner"`
-	Group   string      `p:"group" v:"required" dc:"group name"`
-	JobName string      `p:"jobName" v:"required" dc:"job name"`
-	Labels  g.MapAnyAny `p:"labels" dc:"extend pair values for job"`
+	Id      string `p:"id" v:"required" dc:"node record id"`
+	Host    string `p:"host" v:"required|ip" dc:"node host or ip"`
+	Port    string `p:"port" v:"required|min:1|max:65535" dc:"node exporter port"`
+	Owner   string `p:"owner" v:"required" dc:"this job record owner"`
+	Group   string `p:"group" v:"required" dc:"group name"`
+	JobName string `p:"jobName" v:"required" dc:"job name"`
+	Labels  string `p:"labels" dc:"extend pair values for job"`
 }
 
 type NodeUpdateRes struct {

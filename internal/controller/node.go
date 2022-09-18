@@ -3,6 +3,9 @@ package controller
 import (
 	"context"
 
+	"github.com/gogf/gf/v2/encoding/gjson"
+	"github.com/gogf/gf/v2/errors/gcode"
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	v1 "github.com/leapord/prometheusx/api/v1"
 	model "github.com/leapord/prometheusx/internal/model/do"
@@ -17,12 +20,19 @@ var (
 
 // 新增
 func (c *cNode) AddNode(ctx context.Context, req *v1.NodeAddReq) (res v1.NodeAddRes, err error) {
+
+	if !gjson.Valid(req.Labels) {
+		err = gerror.NewCode(gcode.CodeValidationFailed, "labels 必须是JSON")
+		return
+	}
+
 	node := model.Node{
 		Host:    req.Host,
 		Port:    req.Port,
 		Owner:   req.Owner,
 		Group:   req.Group,
 		JobName: req.JobName,
+		Labels:  req.Labels,
 	}
 	err = service.Node().AddNode(ctx, &node)
 	if err == nil {
@@ -33,6 +43,12 @@ func (c *cNode) AddNode(ctx context.Context, req *v1.NodeAddReq) (res v1.NodeAdd
 
 // 修改
 func (c *cNode) UpdateNode(ctx context.Context, req *v1.NodeUpdateReq) (res *v1.NodeUpdateRes, err error) {
+
+	if !gjson.Valid(req.Labels) {
+		err = gerror.NewCode(gcode.CodeValidationFailed, "labels 必须是JSON")
+		return
+	}
+
 	node := model.Node{
 		Id:      req.Id,
 		Host:    req.Host,
@@ -41,7 +57,7 @@ func (c *cNode) UpdateNode(ctx context.Context, req *v1.NodeUpdateReq) (res *v1.
 		Group:   req.Group,
 		JobName: req.JobName,
 	}
-	if req.Labels != nil {
+	if !g.IsEmpty(req.Labels) {
 		node.Labels = req.Labels
 	}
 	err = service.Node().UpdateNode(ctx, &node)
