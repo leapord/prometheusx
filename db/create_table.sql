@@ -26,7 +26,7 @@ CREATE TABLE node(
     `group` VARCHAR(255) NOT NULL   COMMENT '组名' ,
     labels VARCHAR(255)    COMMENT '标签 对应 prometheus中的label配置选项' ,
     create_time DATETIME   DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
-    active VARCHAR(255)   DEFAULT true COMMENT '是否启用' ,
+    active tinyint   DEFAULT true COMMENT '是否启用' ,
     PRIMARY KEY (id)
 )  COMMENT = '主机';
 

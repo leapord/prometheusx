@@ -82,7 +82,7 @@ func (c *cGroup) Page(ctx context.Context, req *v1.GroupPageReq) (res *v1.GroupP
 			Total:    total,
 			PageNo:   req.PageNo,
 			PageSize: req.PageSize,
-			Model:    list,
+			Models:   list,
 		}
 	}
 	return

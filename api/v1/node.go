@@ -58,7 +58,7 @@ type NodeDetailRes struct {
 }
 type NodePageReq struct {
 	g.Meta   `path:"/node/page" tags:"node" method:"post" summary:"page node query"`
-	PageNo   int    `p:"pageNo" d:"1" v:"min:1#can not lower than 1" dc:"page number"`
+	PageNo   int    `p:"page" d:"1" v:"min:1#can not lower than 1" dc:"page number"`
 	PageSize int    `p:"pageSize" d:"10" v:"max:100" dc:"page size of each page"`
 	Host     string `p:"host" dc:"node host or ip"`
 	Port     string `p:"port" dc:"node exporter port"`
@@ -69,10 +69,10 @@ type NodePageReq struct {
 
 type NodePageRes struct {
 	g.Meta   `mime:"application/json"`
-	PageNo   int `json:"pageNo" dc:"current page number "`
-	PageSize int `json:"pageSize" dc:"current page size"`
-	Total    int `json:"total" dc:"total record for this query condition"`
-	Models   interface{}
+	PageNo   int         `json:"page" dc:"current page number "`
+	PageSize int         `json:"pageSize" dc:"current page size"`
+	Total    int         `json:"total" dc:"total record for this query condition"`
+	Models   interface{} `json:"rows" dc:"records of node"`
 }
 
 type NodeActiveReq struct {

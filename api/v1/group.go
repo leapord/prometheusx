@@ -50,16 +50,16 @@ type GroupDetailRes struct {
 //分页查询
 type GroupPageReq struct {
 	g.Meta   `path:"/group/page" tags:"group" method:"post" summary:"fetch group list by page"`
-	PageNo   int    `p:"pageNo" d:"1"  v:"min:1#分页号码错误"`       // 分页号码
+	PageNo   int    `p:"page" d:"1"  v:"min:1#分页号码错误"`         // 分页号码
 	PageSize int    `p:"pageSize" d:"10" v:"max:50#分页数量最大50条"` // 分页数量，最大50
 	Name     string `p:"name"`
 }
 
 type GroupPageRes struct {
 	g.Meta   `mime:"text/html"`
-	Model    interface{} ` json:"model" dc:"list of query result"`
+	Models   interface{} `json:"rows" dc:"list of query result"`
 	Total    int         `json:"total" dc:"total count"`
-	PageNo   int         `json:"pageNo" dc:"current page no"`
+	PageNo   int         `json:"page" dc:"current page no"`
 	PageSize int         `json:"pageSize" dc:"current page size"`
 }
 
