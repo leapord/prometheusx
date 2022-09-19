@@ -139,7 +139,7 @@ func (s *sNode) Target(ctx context.Context) (result string, err error) {
 		}
 
 		list = append(list, g.Map{
-			"targets": g.NewVar(node.Host).String() + ":" + g.NewVar(node.Port).String(),
+			"targets": []string{g.NewVar(node.Host).String() + ":" + g.NewVar(node.Port).String()},
 			"labels":  labels,
 		})
 	}
