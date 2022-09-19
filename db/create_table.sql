@@ -19,6 +19,7 @@ INSERT INTO `prometheusx`.`user`(`id`, `name`, `login_name`, `password`, `create
 DROP TABLE IF EXISTS node;
 CREATE TABLE node(
     id bigint NOT NULL AUTO_INCREMENT  COMMENT '主键' ,
+    alias VARCHAR(255)    COMMENT '监控项别名' ,
     host VARCHAR(255) NOT NULL   COMMENT '主机地址 IP或者域名' ,
     port VARCHAR(255) NOT NULL   COMMENT 'exporter对应的端口号' ,
     owner VARCHAR(255)    COMMENT '所有者/责任人' ,

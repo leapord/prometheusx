@@ -21,9 +21,14 @@ var (
 func (c *cGroup) AddGroup(ctx context.Context, req *v1.GroupAddReq) (res v1.GroupAddRes, err error) {
 	group := &model.Group{
 		Name:           req.Name,
-		Identification: guid.S(),
+		Identification: req.Identification,
 		CreateTime:     gtime.Now(),
 	}
+
+	if g.IsEmpty(group.Identification) {
+		group.Identification = guid.S()
+	}
+
 	err = service.Group().AddGroup(ctx, group)
 	if err == nil {
 		res.Model = group
@@ -33,8 +38,9 @@ func (c *cGroup) AddGroup(ctx context.Context, req *v1.GroupAddReq) (res v1.Grou
 
 func (c *cGroup) UpdateGroup(ctx context.Context, req *v1.GroupUpdateReq) (res *v1.GroupUpdateRes, err error) {
 	group := &model.Group{
-		Id:   req.Id,
-		Name: req.Name,
+		Id:             req.Id,
+		Name:           req.Name,
+		Identification: req.Identification,
 	}
 
 	err = service.Group().UpdateGroup(ctx, group)
@@ -75,6 +81,9 @@ func (c *cGroup) Page(ctx context.Context, req *v1.GroupPageReq) (res *v1.GroupP
 	group := &model.Group{}
 	if !g.IsEmpty(req.Name) {
 		group.Name = req.Name
+	}
+	if !g.IsEmpty(req.Identification) {
+		group.Identification = req.Identification
 	}
 	list, total, err := service.Group().Page(ctx, *group, (req.PageNo-1)*req.PageSize, req.PageSize)
 	if err == nil {

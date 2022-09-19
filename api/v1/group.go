@@ -4,8 +4,9 @@ import "github.com/gogf/gf/v2/frame/g"
 
 // 添加分组
 type GroupAddReq struct {
-	g.Meta `path:"/group/add" tags:"group" method:"post" summary:"add prometheus group"`
-	Name   string `p:"name" v:"required" dc:"group name"`
+	g.Meta         `path:"/group/add" tags:"group" method:"put" summary:"add prometheus group"`
+	Name           string `p:"name" v:"required" dc:"group name"`
+	Identification string `p:"identification" dc:"group unique id"`
 }
 
 type GroupAddRes struct {
@@ -15,9 +16,10 @@ type GroupAddRes struct {
 
 // 更新分组
 type GroupUpdateReq struct {
-	g.Meta `path:"/group/update" tags:"group" method:"put" summary:"add prometheus group"`
-	Id     string `p:"id" v:"required" dc:"group id,key"`
-	Name   string `p:"name" v:"required" dc:"group name"`
+	g.Meta         `path:"/group/update" tags:"group" method:"post" summary:"add prometheus group"`
+	Id             string `p:"id" v:"required" dc:"group id,key"`
+	Name           string `p:"name" v:"required" dc:"group name"`
+	Identification string `p:"identification" dc:"group unique id"`
 }
 
 type GroupUpdateRes struct {
@@ -49,10 +51,11 @@ type GroupDetailRes struct {
 
 //分页查询
 type GroupPageReq struct {
-	g.Meta   `path:"/group/page" tags:"group" method:"post" summary:"fetch group list by page"`
-	PageNo   int    `p:"page" d:"1"  v:"min:1#分页号码错误"`         // 分页号码
-	PageSize int    `p:"pageSize" d:"10" v:"max:50#分页数量最大50条"` // 分页数量，最大50
-	Name     string `p:"name"`
+	g.Meta         `path:"/group/page" tags:"group" method:"post" summary:"fetch group list by page"`
+	PageNo         int    `p:"page" d:"1"  v:"min:1#分页号码错误"`         // 分页号码
+	PageSize       int    `p:"pageSize" d:"10" v:"max:50#分页数量最大50条"` // 分页数量，最大50
+	Name           string `p:"name" dc:"group name"`
+	Identification string `p:"identification" dc:"group unique id"`
 }
 
 type GroupPageRes struct {

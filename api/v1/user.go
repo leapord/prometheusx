@@ -2,6 +2,7 @@ package v1
 
 import "github.com/gogf/gf/v2/frame/g"
 
+// 添加
 type UserAddReq struct {
 	g.Meta      `path:"/user/add" tags:"User" method:"put" summary:"add user"`
 	LoginName   string `p:"loginName" v:"required" dc:"user's login name"`
@@ -15,6 +16,7 @@ type UserAddRes struct {
 	Model  interface{} `json:"model"`
 }
 
+// 更新
 type UserUpdateReq struct {
 	g.Meta      `path:"/user/update" tags:"User" method:"post" summary:"update user"`
 	Id          int    `p:"id"  v:"required|integer" dc:"User record id"`
@@ -28,6 +30,7 @@ type UserUpdateRes struct {
 	Model  interface{} `json:"model"`
 }
 
+// 删除
 type UserRemoveReq struct {
 	g.Meta `path:"/user/delete/{id}" tags:"User" method:"delete" summary:"delete user"`
 	Id     int `p:"id" v:"required|integer" dc:"user record id"`
@@ -37,6 +40,7 @@ type UserRemoveRes struct {
 	Model  interface{} `json:"model"`
 }
 
+// 查询单个详情
 type UserDetailReq struct {
 	g.Meta `path:"/user/detail/{id}" tags:"User" method:"get" summary:"get single user detail"`
 	Id     int `p:"id" v:"required|integer" dc:"user record id"`
@@ -46,6 +50,7 @@ type UserDetailRes struct {
 	Model  interface{} `json:"model"`
 }
 
+// 分页查询
 type UserPageReq struct {
 	g.Meta      `path:"/user/page" tags:"User" method:"post" summary:"find user by page"`
 	PageNo      int    `p:"page" v:"min:1" d:"1" dc:"page number"`
@@ -62,4 +67,16 @@ type UserPageRes struct {
 	Total    int         `json:"total" dc:"number of this condition"`
 	PageNo   int         `json:"page"`
 	PageSize int         `json:"pageSize"`
+}
+
+// 更新密码
+type UserUpdatePasswordReq struct {
+	g.Meta      `path:"/user/updatePassword" tags:"User" method:"post" summary:"reset user password"`
+	Id          int    `p:"id" v:"min:1|required#请填写正确的用户主键"`
+	Password    string `p:"password" v:"required"  dc:"old password"`
+	NewPassword string `p:"newPassword" v:"required" dc:"new password"`
+}
+
+type UserUpdatePasswordRes struct {
+	g.Meta `mime:"application/json"`
 }

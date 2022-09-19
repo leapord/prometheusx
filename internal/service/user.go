@@ -21,6 +21,7 @@ type IUser interface {
 	Delete(ctx context.Context, id int) (user entity.User, err error)
 	Detail(ctx context.Context, id int) (user entity.User, err error)
 	Page(ctx context.Context, pageNo int, pageSize int, user model.User) (total int, users []entity.User, err error)
+	UpdatePassword(ctx context.Context, user model.User, password string) (err error)
 }
 
 var localUser IUser

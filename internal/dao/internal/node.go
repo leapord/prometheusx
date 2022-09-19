@@ -21,6 +21,7 @@ type NodeDao struct {
 // NodeColumns defines and stores column names for table node.
 type NodeColumns struct {
 	Id         string // 主键
+	Alias      string // 监控项别名
 	Host       string // 主机地址 IP或者域名
 	Port       string // exporter对应的端口号
 	Owner      string // 所有者/责任人
@@ -34,6 +35,7 @@ type NodeColumns struct {
 //  nodeColumns holds the columns for table node.
 var nodeColumns = NodeColumns{
 	Id:         "id",
+	Alias:      "alias",
 	Host:       "host",
 	Port:       "port",
 	Owner:      "owner",

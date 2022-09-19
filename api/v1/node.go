@@ -7,6 +7,7 @@ import "github.com/gogf/gf/v2/frame/g"
  */
 type NodeAddReq struct {
 	g.Meta  `path:"/node/add" tags:"node" method:"put" summary:"add node"`
+	Alias   string `p:"alias" v:"required" dc:"node exporter item name"`
 	Host    string `p:"host" v:"required|ip" dc:"node host or ip"`
 	Port    string `p:"port" v:"required|min:1|max:65535" dc:"node exporter port"`
 	Owner   string `p:"owner" v:"required" dc:"this job record owner"`
@@ -25,6 +26,7 @@ type NodeAddRes struct {
 type NodeUpdateReq struct {
 	g.Meta  `path:"/node/update" tags:"node" method:"post" summary:"update node"`
 	Id      string `p:"id" v:"required" dc:"node record id"`
+	Alias   string `p:"alias" v:"required" dc:"node exporter item name"`
 	Host    string `p:"host" v:"required|ip" dc:"node host or ip"`
 	Port    string `p:"port" v:"required|min:1|max:65535" dc:"node exporter port"`
 	Owner   string `p:"owner" v:"required" dc:"this job record owner"`
@@ -60,6 +62,7 @@ type NodePageReq struct {
 	g.Meta   `path:"/node/page" tags:"node" method:"post" summary:"page node query"`
 	PageNo   int    `p:"page" d:"1" v:"min:1#can not lower than 1" dc:"page number"`
 	PageSize int    `p:"pageSize" d:"10" v:"max:100" dc:"page size of each page"`
+	Alias    string `p:"alias" dc:"node exporter item name"`
 	Host     string `p:"host" dc:"node host or ip"`
 	Port     string `p:"port" dc:"node exporter port"`
 	Owner    string `p:"owner" dc:"this job record owner"`

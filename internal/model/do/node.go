@@ -13,6 +13,7 @@ import (
 type Node struct {
 	g.Meta     `orm:"table:node, do:true"`
 	Id         interface{} // 主键
+	Alias      interface{} // 监控项别名
 	Host       interface{} // 主机地址 IP或者域名
 	Port       interface{} // exporter对应的端口号
 	Owner      interface{} // 所有者/责任人

@@ -11,6 +11,7 @@ import (
 // Node is the golang structure for table node.
 type Node struct {
 	Id         int64       `json:"id"         ` // 主键
+	Alias      string      `json:"alias"      ` // 监控项别名
 	Host       string      `json:"host"       ` // 主机地址 IP或者域名
 	Port       string      `json:"port"       ` // exporter对应的端口号
 	Owner      string      `json:"owner"      ` // 所有者/责任人

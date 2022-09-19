@@ -160,3 +160,16 @@ func (s *sUser) Page(ctx context.Context, pageNo int, pageSize int, user model.U
 	}
 	return
 }
+
+func (s *sUser) UpdatePassword(ctx context.Context, user model.User, password string) (err error) {
+	count, err := g.Model(entity.User{}).Where(model.User{Id: user.Id, Password: password}).UpdateAndGetAffected(user)
+	if err != nil {
+		g.Log().Error(ctx, err)
+	}
+
+	if count != 1 {
+		err = gerror.NewCode(gcode.CodeNotFound, "密码不正确")
+	}
+
+	return
+}

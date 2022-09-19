@@ -27,6 +27,7 @@ func (c *cNode) AddNode(ctx context.Context, req *v1.NodeAddReq) (res v1.NodeAdd
 	}
 
 	node := model.Node{
+		Alias:   req.Alias,
 		Host:    req.Host,
 		Port:    req.Port,
 		Owner:   req.Owner,
@@ -51,6 +52,7 @@ func (c *cNode) UpdateNode(ctx context.Context, req *v1.NodeUpdateReq) (res *v1.
 
 	node := model.Node{
 		Id:      req.Id,
+		Alias:   req.Alias,
 		Host:    req.Host,
 		Port:    req.Port,
 		Owner:   req.Owner,
@@ -96,6 +98,7 @@ func (c *cNode) DetilNode(ctx context.Context, req *v1.NodeDetailReq) (res *v1.N
 // 分页查询
 func (c *cNode) PageNode(ctx context.Context, req *v1.NodePageReq) (res *v1.NodePageRes, err error) {
 	node := model.Node{
+		Alias:   req.Alias,
 		Host:    req.Host,
 		Port:    req.Port,
 		Group:   req.Group,

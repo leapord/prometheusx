@@ -103,3 +103,9 @@ func (c *cUser) PageUser(ctx context.Context, req *v1.UserPageReq) (res *v1.User
 	}
 	return
 }
+
+// 修改用户密码
+func (c *cUser) UpdatePassword(ctx context.Context, req *v1.UserUpdatePasswordReq) (res *v1.UserUpdatePasswordRes, err error) {
+	err = service.User().UpdatePassword(ctx, model.User{Id: req.Id, Password: req.NewPassword}, req.Password)
+	return
+}

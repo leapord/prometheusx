@@ -30,7 +30,9 @@ func (s *sGroup) AddGroup(ctx context.Context, group *model.Group) (err error) {
 }
 
 func (s *sGroup) UpdateGroup(ctx context.Context, group *model.Group) (err error) {
-	_, err = g.Model(entity.Group{}).UpdateAndGetAffected(group)
+	_, err = g.Model(entity.Group{}).Where(model.Group{
+		Id: group.Id,
+	}).UpdateAndGetAffected(group)
 	if err != nil {
 		g.Log().Error(ctx, err)
 	}
