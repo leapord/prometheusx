@@ -23,7 +23,7 @@ type UserColumns struct {
 	Id          string // 主键
 	Name        string // 用户名
 	LoginName   string // 登录名
-	Password    string // 登录密码,sha256加密
+	Password    string // 登录密码,MD5加密
 	CreateTime  string // 创建时间
 	Email       string // 邮箱
 	PhoneNumber string // 手机号码

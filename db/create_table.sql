@@ -3,7 +3,7 @@ CREATE TABLE user(
     id bigint NOT NULL AUTO_INCREMENT  COMMENT '主键' ,
     name VARCHAR(255) NOT NULL   COMMENT '用户名' ,
     login_name VARCHAR(255) NOT NULL   COMMENT '登录名' ,
-    `password` VARCHAR(255) NOT NULL   COMMENT '登录密码,sha256加密' ,
+    `password` VARCHAR(255) NOT NULL   COMMENT '登录密码,MD5加密' ,
     create_time DATETIME NOT NULL  DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
     email VARCHAR(255) NOT NULL   COMMENT '邮箱' ,
     phone_number VARCHAR(255) NOT NULL   COMMENT '手机号码' ,
@@ -31,8 +31,6 @@ CREATE TABLE node(
     PRIMARY KEY (id)
 )  COMMENT = '主机';
 
-
-
 CREATE UNIQUE INDEX node_idx_hosts ON node(host,port);
 
 DROP TABLE IF EXISTS `group`;
@@ -44,19 +42,30 @@ CREATE TABLE `group`(
     PRIMARY KEY (id)
 )  COMMENT = '分组';
 
-
 CREATE UNIQUE INDEX group_idx_name ON `group`(name);
 
-DROP TABLE IF EXISTS namespace;
-CREATE TABLE namespace(
+INSERT INTO `group`(id, name, identification, create_time) VALUES (1, '默认分组', 'default', '2022-09-19 08:22:20');
+
+
+DROP TABLE IF EXISTS rules;
+CREATE TABLE rules(
     id bigint NOT NULL AUTO_INCREMENT  COMMENT '主键' ,
-    name VARCHAR(255) NOT NULL   COMMENT '名称' ,
-    identification VARCHAR(255) NOT NULL   COMMENT '标识' ,
-    create_time DATETIME  DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
+    group_name VARCHAR(255) NOT NULL   COMMENT '规则组名称' ,
+    type VARCHAR(255) NOT NULL   COMMENT '规则类型 alert record' ,
+    content VARCHAR(255) NOT NULL   COMMENT '规则内容' ,
+    active tinyint   DEFAULT true COMMENT '是否启用' ,
+    create_time DATETIME   DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
     PRIMARY KEY (id)
-)  COMMENT = '命名空间';
+)  COMMENT = '规则';
 
+CREATE UNIQUE INDEX rules_group_name ON rules(group_name);
 
-CREATE UNIQUE INDEX namespace_idx_name ON namespace(name);
-CREATE INDEX namespace_idx_identification ON namespace(identification);
+DROP TABLE IF EXISTS config;
+CREATE TABLE config(
+    id bigint NOT NULL AUTO_INCREMENT  COMMENT '主键' ,
+    name VARCHAR(255) NOT NULL   COMMENT '配置名称' ,
+    value VARCHAR(255) NOT NULL   COMMENT '配置内容' ,
+    PRIMARY KEY (id)
+)  COMMENT = '配置';
 
+CREATE UNIQUE INDEX config_name ON config(name);

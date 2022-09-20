@@ -15,7 +15,7 @@ type User struct {
 	Id          interface{} // 主键
 	Name        interface{} // 用户名
 	LoginName   interface{} // 登录名
-	Password    interface{} // 登录密码,sha256加密
+	Password    interface{} // 登录密码,MD5加密
 	CreateTime  *gtime.Time // 创建时间
 	Email       interface{} // 邮箱
 	PhoneNumber interface{} // 手机号码
