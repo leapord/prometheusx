@@ -7,5 +7,6 @@ package logic
 import (
 	_ "github.com/leapord/prometheusx/internal/logic/group"
 	_ "github.com/leapord/prometheusx/internal/logic/node"
+	_ "github.com/leapord/prometheusx/internal/logic/rules"
 	_ "github.com/leapord/prometheusx/internal/logic/user"
 )

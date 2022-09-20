@@ -43,6 +43,7 @@ var (
 						controller.Group,
 						controller.Node,
 						controller.User,
+						controller.Rules,
 					)
 				})
 			})

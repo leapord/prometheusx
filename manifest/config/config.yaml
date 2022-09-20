@@ -9,8 +9,8 @@ database:
     link: "root:root@tcp(127.0.0.1:3306)/prometheusx"
     debug: true
 
-# profile:
-#   active: dev
+profile:
+  active: dev
 
 logger:
   level: "all"
