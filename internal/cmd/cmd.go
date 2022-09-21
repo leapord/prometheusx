@@ -44,6 +44,7 @@ var (
 						controller.Node,
 						controller.User,
 						controller.Rules,
+						controller.Config,
 					)
 				})
 			})

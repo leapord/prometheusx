@@ -58,13 +58,11 @@ CREATE TABLE rules(
     PRIMARY KEY (id)
 )  COMMENT = '规则';
 
-CREATE UNIQUE INDEX rules_group_name ON rules(group_name);
-
 DROP TABLE IF EXISTS config;
 CREATE TABLE config(
     id bigint NOT NULL AUTO_INCREMENT  COMMENT '主键' ,
     name VARCHAR(255) NOT NULL   COMMENT '配置名称' ,
-    value VARCHAR(255) NOT NULL   COMMENT '配置内容' ,
+    value VARCHAR(512) NOT NULL   COMMENT '配置内容' ,
     PRIMARY KEY (id)
 )  COMMENT = '配置';
 

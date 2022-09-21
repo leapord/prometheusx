@@ -89,7 +89,7 @@ func (c *cRules) DetailRule(ctx context.Context, req *v1.RuleDetailReq) (res *v1
 
 // 分页查询
 func (c *cRules) PageRule(ctx context.Context, req *v1.RulePageReq) (res *v1.RulePageRes, err error) {
-	if !contains(types, req.Type) {
+	if !g.IsEmpty(req.Type) && !contains(types, req.Type) {
 		err = gerror.NewCode(gcode.CodeValidationFailed, "type must be 'alert' or 'record'")
 		return
 	}
@@ -111,5 +111,11 @@ func (c *cRules) PageRule(ctx context.Context, req *v1.RulePageReq) (res *v1.Rul
 // 生成规则文件
 func (c *cRules) GeneratedFile(ctx context.Context, req *v1.RuleFileGeneratedReq) (res *v1.RuleFileGeneratedRes, err error) {
 	err = service.Rules().GeneratedFile(ctx)
+	return
+}
+
+// 改变规则激活状态
+func (c *cRules) Active(ctx context.Context, req *v1.RuleActiveReq) (res *v1.RuleActiveRes, err error) {
+	err = service.Rules().Active(ctx, req.Id, req.Active)
 	return
 }

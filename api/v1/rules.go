@@ -77,3 +77,14 @@ type RuleFileGeneratedReq struct {
 type RuleFileGeneratedRes struct {
 	g.Meta `mime:"application/json"`
 }
+
+// 变更状态
+type RuleActiveReq struct {
+	g.Meta `path:"/rule/active" tags:"Rule" method:"post" summary:"change the rule status"`
+	Id     int  `p:"id" v:"required|integer|min:1" dc:"rule record id"`
+	Active bool `p:"active" v:"required|boolean" dc:"active status must be true or false"`
+}
+
+type RuleActiveRes struct {
+	g.Meta `mime:"application/json"`
+}

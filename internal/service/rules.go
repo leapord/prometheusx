@@ -19,6 +19,7 @@ type IRules interface {
 	Detail(ctx context.Context, id int) (rules entity.Rules, err error)
 	Page(ctx context.Context, pageNo int, pageSize int, rules model.Rules) (models []entity.Rules, total int, err error)
 	GeneratedFile(ctx context.Context) (err error)
+	Active(ctx context.Context, id int, active bool) (err error)
 }
 
 var localRules IRules

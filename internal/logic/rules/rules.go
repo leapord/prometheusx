@@ -115,6 +115,11 @@ func (s *sRules) GeneratedFile(ctx context.Context) (err error) {
 	prometheusRuleDirectory, _ := g.Model(entity.Config{}).Where(model.Config{Name: consts.PROMETHEUS_RULE_PATH}).Fields("value").Value()
 	prometheusAdminUrl, _ := g.Model(entity.Config{}).Where(model.Config{Name: consts.PROMETHEUS_ADMIN_URL}).Fields("value").Value()
 
+	if prometheusConfigFile.IsEmpty() || prometheusToolFile.IsEmpty() || prometheusRuleDirectory.IsEmpty() || prometheusAdminUrl.IsEmpty() {
+		err = gerror.NewCode(gcode.New(1009, "prometheus 配置信息不全", nil))
+		return
+	}
+
 	err = generatedFile(ctx, "alert", prometheusConfigFile.String(), prometheusToolFile.String(), prometheusRuleDirectory.String())
 	if err != nil {
 		return
@@ -140,7 +145,7 @@ func generatedFile(ctx context.Context, ruleType, prometheusConfigFile, promethe
 		return
 	}
 	for _, groupName := range results.Slice() {
-		filePath := prometheusRuleDirectory + "/" + g.NewVar(groupName).String() + ".yml"
+		filePath := prometheusRuleDirectory + "/" + g.NewVar(groupName).String() + "_" + ruleType + ".yml"
 		err = parseRuleToFile(ctx, g.NewVar(groupName).String(), ruleType, filePath)
 		if err != nil {
 			return
@@ -185,5 +190,14 @@ func parseRuleToFile(ctx context.Context, groupName, ruleType, filePath string) 
 	}
 
 	utility.GenerateRuleFile(gctx.New(), vo.Groups{Groups: groups}, filePath)
+	return
+}
+
+// 激活或者停用规则
+func (s *sRules) Active(ctx context.Context, id int, active bool) (err error) {
+	affected, err := g.Model(entity.Rules{}).Where(model.Rules{Id: id}).UpdateAndGetAffected(model.Rules{Active: active})
+	if affected != 1 {
+		err = gerror.Wrap(err, "记录不存在")
+	}
 	return
 }
