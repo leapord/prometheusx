@@ -1,6 +1,7 @@
 package rules
 
 import (
+	"bytes"
 	"context"
 	"os/exec"
 
@@ -112,20 +113,30 @@ func (s *sRules) GeneratedFile(ctx context.Context) (err error) {
 	prometheusConfigFile, _ := g.Model(entity.Config{}).Where(model.Config{Name: consts.PROMETHEUS_CONFIG_PATH}).Fields("value").Value()
 	prometheusToolFile, _ := g.Model(entity.Config{}).Where(model.Config{Name: consts.PROMETHEUS_TOOL_PATH}).Fields("value").Value()
 	prometheusRuleDirectory, _ := g.Model(entity.Config{}).Where(model.Config{Name: consts.PROMETHEUS_RULE_PATH}).Fields("value").Value()
+	prometheusAdminUrl, _ := g.Model(entity.Config{}).Where(model.Config{Name: consts.PROMETHEUS_ADMIN_URL}).Fields("value").Value()
 
 	err = generatedFile(ctx, "alert", prometheusConfigFile.String(), prometheusToolFile.String(), prometheusRuleDirectory.String())
 	if err != nil {
 		return
 	}
 	err = generatedFile(ctx, "record", prometheusConfigFile.String(), prometheusToolFile.String(), prometheusRuleDirectory.String())
+
+	if err != nil {
+		return
+	}
+	_, err = g.Client().Post(ctx, prometheusAdminUrl.String())
+	if err != nil {
+		err = gerror.NewCode(gcode.CodeInvalidRequest)
+	}
+
 	return
 }
 
 // 生成规则文件
 func generatedFile(ctx context.Context, ruleType, prometheusConfigFile, prometheusToolFile, prometheusRuleDirectory string) (err error) {
 
-	results, err := g.DB().GetValue(ctx, "SELECT DISTINCT `group_name` FROM `rules` where type = ?", ruleType)
-	if err != nil {
+	results, err := g.DB().GetValue(ctx, "SELECT DISTINCT `group_name` FROM `rules` where type = ? and `active` = true", ruleType)
+	if err != nil || len(results.Slice()) == 0 {
 		return
 	}
 	for _, groupName := range results.Slice() {
@@ -135,13 +146,19 @@ func generatedFile(ctx context.Context, ruleType, prometheusConfigFile, promethe
 			return
 		}
 	}
-	cmd := exec.Command(prometheusToolFile + " check config " + prometheusConfigFile)
-	out, err := cmd.CombinedOutput()
 
-	result := g.NewVar(out).String()
-	if gstr.Contains(result, "FAILED") {
-		err = gerror.NewCode(gcode.CodeInvalidParameter, result)
-		return
+	cmd := exec.Command(prometheusToolFile, "check", "config", prometheusConfigFile)
+	var stdin, stdout, stderr bytes.Buffer
+	cmd.Stdin = &stdin
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+	cmd.Run()
+
+	outStr, errStr := stdout.String(), stderr.String()
+
+	g.Log().Info(ctx, outStr)
+	if gstr.Contains(errStr, "FAILED") {
+		err = gerror.NewCode(gcode.New(1006, errStr, nil))
 	}
 	return
 }
@@ -149,7 +166,7 @@ func generatedFile(ctx context.Context, ruleType, prometheusConfigFile, promethe
 // 生成操作
 func parseRuleToFile(ctx context.Context, groupName, ruleType, filePath string) (err error) {
 	rules := []entity.Rules{}
-	err = g.Model(entity.Rules{}).Where(model.Rules{GroupName: groupName, Type: ruleType}).Scan(&rules)
+	err = g.Model(entity.Rules{}).Where(model.Rules{GroupName: groupName, Type: ruleType, Active: true}).Scan(&rules)
 	if err != nil {
 		g.Log().Error(ctx, err)
 		return
