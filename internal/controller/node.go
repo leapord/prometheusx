@@ -45,7 +45,7 @@ func (c *cNode) AddNode(ctx context.Context, req *v1.NodeAddReq) (res v1.NodeAdd
 // 修改
 func (c *cNode) UpdateNode(ctx context.Context, req *v1.NodeUpdateReq) (res *v1.NodeUpdateRes, err error) {
 
-	if !gjson.Valid(req.Labels) {
+	if !g.IsEmpty(req.Labels) && !gjson.Valid(req.Labels) {
 		err = gerror.NewCode(gcode.CodeValidationFailed, "labels 必须是JSON")
 		return
 	}
