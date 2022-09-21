@@ -19,7 +19,7 @@ var (
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
 			s.SetIndexFolder(true)
-			s.SetServerRoot("resource/public/html")
+			s.SetServerRoot("./static/public/html/")
 			// 无需权限
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				group.Middleware(
