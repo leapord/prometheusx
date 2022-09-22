@@ -67,3 +67,19 @@ CREATE TABLE config(
 )  COMMENT = '配置';
 
 CREATE UNIQUE INDEX config_name ON config(name);
+
+DROP TABLE IF EXISTS alert;
+CREATE TABLE alert(
+    id bigint NOT NULL AUTO_INCREMENT  COMMENT '主键' ,
+    group_key VARCHAR(255)    COMMENT 'key identifying the group of alerts (e.g. to deduplicate)' ,
+    status VARCHAR(255)    COMMENT 'resolved|firing' ,
+    external_url VARCHAR(255)    COMMENT 'alertmanager连接' ,
+    labels VARCHAR(512)    COMMENT '告警labels' ,
+    annotations VARCHAR(512)    COMMENT '告警annotations' ,
+    starts_at DATETIME    COMMENT '告警开始时间' ,
+    ends_at DATETIME    COMMENT '告警结束时间' ,
+    generator_url VARCHAR(255)    COMMENT '触发告警连接' ,
+    fingerprint VARCHAR(255)    COMMENT '告警指纹' ,
+    create_time DATETIME   DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
+    PRIMARY KEY (id)
+)  COMMENT = '告警消息';
