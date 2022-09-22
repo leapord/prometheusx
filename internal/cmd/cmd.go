@@ -7,6 +7,7 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gcmd"
 
+	"github.com/gogf/gf/v2/os/gfile"
 	"github.com/leapord/prometheusx/internal/controller"
 	"github.com/leapord/prometheusx/internal/middleware"
 )
@@ -18,8 +19,12 @@ var (
 		Brief: "start http server",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
-			s.SetIndexFolder(true)
-			s.SetServerRoot("./static/public/html/")
+			if gfile.Exists("./static/public/html/") {
+				s.SetIndexFolder(true)
+				s.SetServerRoot("./static/public/html/")
+			} else {
+				g.Log().Error(ctx, "./static/public/html/ directory is not exist")
+			}
 			// 无需权限
 			s.Group("/", func(group *ghttp.RouterGroup) {
 				group.Middleware(
@@ -32,6 +37,7 @@ var (
 						controller.Hello,
 						controller.Authentication,
 						controller.Target,
+						controller.AlertWebhook,
 					)
 				})
 				// 权限验证
@@ -45,6 +51,7 @@ var (
 						controller.User,
 						controller.Rules,
 						controller.Config,
+						controller.Alert,
 					)
 				})
 			})

@@ -8,6 +8,8 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.4.2
 )
 
+require github.com/gookit/event v1.0.6 // indirect
+
 require (
 	github.com/BurntSushi/toml v1.2.0 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect

@@ -5,7 +5,7 @@ gfcli:
     gen:
         dao:
         - link:  "mysql:root:root@tcp(127.0.0.1:3306)/prometheusx"
-          tables:  "user,group,node,rules,config"
+          tables:  "user,group,node,rules,config,alert"
           jsonCase: "CamelLower"
     build:
       name:      "promtheusx"
