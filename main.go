@@ -10,6 +10,7 @@ import (
 	"github.com/gogf/gf/v2/os/gres"
 	"github.com/gogf/gf/v2/util/gvalid"
 	"github.com/leapord/prometheusx/internal/cmd"
+	_ "github.com/leapord/prometheusx/internal/event"
 	_ "github.com/leapord/prometheusx/internal/logic"
 	_ "github.com/leapord/prometheusx/internal/packed"
 	"github.com/leapord/prometheusx/internal/validator"

@@ -14,7 +14,7 @@ CREATE UNIQUE INDEX user_idx_login_name ON user(login_name);
 CREATE UNIQUE INDEX user_idx_email ON user(email);
 CREATE UNIQUE INDEX user_idx_phone_number ON user(phone_number);
 
-INSERT INTO `prometheusx`.`user`(`id`, `name`, `login_name`, `password`, `create_time`, `email`, `phone_number`) VALUES (1, 'leapord', 'leapord', 'f4fc8a416f8be148db91d57412cc34a0', '2022-09-12 00:55:05', 'leapord@email.com', '13100225566');
+INSERT INTO `prometheusx`.`user`(`id`, `name`, `login_name`, `password`, `create_time`, `email`, `phone_number`) VALUES (1, 'leapord', 'leapord', 'f4fc8a416f8be148db91d57412cc34a0', '2022-09-12 00:55:05', 'leapord@foxmail.com', '13100225566');
 
 DROP TABLE IF EXISTS node;
 CREATE TABLE node(

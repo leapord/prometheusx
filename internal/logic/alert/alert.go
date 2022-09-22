@@ -4,6 +4,8 @@ import (
 	"context"
 
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gookit/event"
+	"github.com/leapord/prometheusx/internal/consts"
 	model "github.com/leapord/prometheusx/internal/model/do"
 	"github.com/leapord/prometheusx/internal/model/entity"
 	vo "github.com/leapord/prometheusx/internal/model/vo"
@@ -24,8 +26,8 @@ func New() *sAlert {
 func (s *sAlert) AddAlert(ctx context.Context, alerts []model.Alert) (err error) {
 	gmodel := g.Model(entity.Alert{})
 	for _, alert := range alerts {
-		_, err = gmodel.InsertAndGetId(alert)
-		// 预留，根据消息ID 发送广播事件，推送告警等
+		id, err := gmodel.InsertAndGetId(alert)
+		event.Fire(consts.ALERT_WEB_HOOK_EVENT, event.M{consts.ALERT_MESSAGE_ID: id})
 		if err != nil {
 			g.Log().Error(ctx, err)
 		}
