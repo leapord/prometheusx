@@ -2,6 +2,21 @@
 
     prometheus x 是基于 prometheus http_sd 监控项发现方式实现的增强组件，提供基本的scrape_configs 配置管理，规则管理等，用于替换繁琐的配置文件配置方式
 
+提供三大主要能力，减少prometheus维护成本
+
+1、配置管理 基于http_sd
+
+2、告警规则管理，一键自动生成规则文件，并自动访问 /-/reload  api 加载配置文件
+
+3、告警管理，根据alertmanager中webhook方式，实现告警消息本地储存和发送电子邮件；自动发送邮件必须有labels.owner属性
+
+关键API
+
+```shell
+http://promethuesxAddres/api/node/target  # http_sd 访问主要地址
+http://promethuesxAddres/api/alert/webhook # alertmanager中 webhook主要地址
+```
+
 ## 开发
 
 * 环境配置
@@ -179,7 +194,29 @@ scrape_configs:
   # 此项是连接 prometheusx关键 
   - job_name: "prometheus"
     http_sd_configs:
-     - url: http://localhost:8000/api/node/target## 
+     - url: http://localhost:8000/api/node/target
+```
+
+* alertmanager.yml 配置
+
+```yaml
+route:
+  group_by: ['alertname']
+  group_wait: 30s
+  group_interval: 1m
+  repeat_interval: 1m
+  receiver: 'web.hook'
+receivers:
+  - name: 'web.hook'
+    webhook_configs:
+        # prometheusx 中的webhookAPI地址
+      - url: 'http://127.0.0.1:8000/api/alert/webhook'
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']
 ```
 
 ## 功能展示
@@ -201,3 +238,11 @@ scrape_configs:
 用户管理
 
 ![](img/user.png)
+
+配置管理
+
+![](img/config.png)
+
+告警管理
+
+![](img/alert.png)
