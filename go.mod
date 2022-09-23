@@ -6,12 +6,8 @@ require (
 	github.com/gogf/gf/contrib/drivers/mysql/v2 v2.1.4
 	github.com/gogf/gf/v2 v2.1.4
 	github.com/golang-jwt/jwt/v4 v4.4.2
-)
-
-require (
-	github.com/gookit/event v1.0.6 // indirect
-	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
-	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df // indirect
+	github.com/gookit/event v1.0.6
+	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df
 )
 
 require (
@@ -39,5 +35,6 @@ require (
 	golang.org/x/net v0.0.0-20220907135653-1e95f45603a7 // indirect
 	golang.org/x/sys v0.0.0-20220907062415-87db552b00fd // indirect
 	golang.org/x/text v0.3.8-0.20211105212822-18b340fc7af2 // indirect
+	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/yaml.v3 v3.0.1
 )
