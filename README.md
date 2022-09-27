@@ -162,9 +162,7 @@ logger:
   writerColorEnable:     false         # 日志文件是否带上颜色。默认false，表示不带颜色
 ```
 
-* 配置prometheus相关文件地址 [v1.1功能，暂未完成]
-
-待补充
+* 
 
 * prometheus配置文件设置
 
@@ -246,3 +244,11 @@ inhibit_rules:
 告警管理
 
 ![](img/alert.png)
+
+规则管理
+
+![](img/rule.png)
+
+![](img/rule_alert.png)
+
+![](img/rule_record.png)
